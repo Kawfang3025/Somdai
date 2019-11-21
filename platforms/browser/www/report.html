@@ -11,6 +11,11 @@
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript" src="js/html2canvas.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+
     <title>SomDai</title>
 </head>
 
@@ -124,8 +129,15 @@
 
     <script>
         var db = firebase.firestore();
-        yearlist()
-        year = [];
+        var year = [];
+        var finish = [];
+        var all = [];
+        var detail = [];
+        var emp = [];
+        var tech = [];
+        var dateRP = [];
+        yearlist();
+        finishdata();
         function yearlist() {
             db.collection("repairing").get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
@@ -134,12 +146,462 @@
                     DateTime = DateTime.toUTCString();
                     DateTime = DateTime.split(' ').slice(3, 4).join(' ');
                     year.push(DateTime);
+                    year = [...new Set(year)];
                     // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", DateTime);
+                    for (let i = 0; i < year.length; i++) {
+                        year.sort(function (a, b) {
+                            return b - a
+                        });
+                        document.getElementById('yearShow').innerHTML += '<option value="' + year[i] + '">' + year[i] + '</option>`';
+                    }
                 });
-            });
 
+            });
         }
+        function finishdata() {
+            finish = [];
+            var year = document.getElementById('yearShow').value;
+            var department = document.getElementById('department').value;
+            var jan = 0;
+            var feb = 0;
+            var mar = 0;
+            var apr = 0;
+            var may = 0;
+            var jun = 0;
+            var jul = 0;
+            var aug = 0;
+            var sep = 0;
+            var oct = 0;
+            var nov = 0;
+            var dec = 0;
+            db.collection("repairing").get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    var DateTime = doc.data().date.toDate();
+                        DateTime = DateTime.toUTCString();
+                        DateTime = DateTime.split(' ').slice(2, 3).join(' ');
+                    var y = doc.data().date.toDate();
+                        y = y.toUTCString();
+                        y = y.split(' ').slice(3, 4).join(' ');
+                    console.log("y"+y);
+                    console.log(DateTime);
+                    if (doc.data().status === "ดำเนินการเสร็จสิ้น" && year === document.getElementById('yearShow').value) {
+                        if (DateTime === "Jan") {
+                            jan++
+                        }else if (DateTime === "Feb") {
+                            feb++
+                        }else if (DateTime === "Mar") {
+                            mar++
+                        }else if (DateTime === "Apr") {
+                            apr++
+                        }else if (DateTime === "May") {
+                            may++
+                        }else if (DateTime === "Jun") {
+                            jun++
+                        }else if (DateTime === "Jul") {
+                            jul++
+                        }else if (DateTime === "Aug") {
+                            aug++
+                        }else if (DateTime === "Sep") {
+                            sep++
+                        }else if (DateTime === "Oct") {
+                            oct++
+                        }else if (DateTime === "Nov") {
+                            nov++
+                        }else if (DateTime === "Dec") {
+                            dec++
+                        }
+                    }
+
+                });
+
+                finish.push(jan);
+                finish.push(feb);
+                finish.push(mar);
+                finish.push(apr);
+                finish.push(may);
+                finish.push(jun);
+                finish.push(jul);
+                finish.push(aug);
+                finish.push(sep);
+                finish.push(oct);
+                finish.push(nov);
+                finish.push(dec);
+
+                console.log("f"+finish);
+                alldata();
+            });
+        }
+        function alldata() {
+            all = [];
+            var year = document.getElementById('yearShow').value;
+            var department = document.getElementById('department').value;
+            var jan = 0;
+            var feb = 0;
+            var mar = 0;
+            var apr = 0;
+            var may = 0;
+            var jun = 0;
+            var jul = 0;
+            var aug = 0;
+            var sep = 0;
+            var oct = 0;
+            var nov = 0;
+            var dec = 0;
+            db.collection("repairing").get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    
+                    var DateTime = doc.data().date.toDate();
+                        DateTime = DateTime.toUTCString();
+                        DateTime = DateTime.split(' ').slice(2, 3).join(' ');
+                    var y = doc.data().date.toDate();
+                        y = y.toUTCString();
+                        y = y.split(' ').slice(3, 4).join(' ');
+                    console.log("y"+y);
+                    if (document.getElementById('yearShow').value === y) {
+                        if (DateTime === "Jan") {
+                            jan++
+                        }else if (DateTime === "Feb") {
+                            feb++
+                        }else if (DateTime === "Mar") {
+                            mar++
+                        }else if (DateTime === "Apr") {
+                            apr++
+                        }else if (DateTime === "May") {
+                            may++
+                        }else if (DateTime === "Jun") {
+                            jun++
+                        }else if (DateTime === "Jul") {
+                            jul++
+                        }else if (DateTime === "Aug") {
+                            aug++
+                        }else if (DateTime === "Sep") {
+                            sep++
+                        }else if (DateTime === "Oct") {
+                            oct++
+                        }else if (DateTime === "Nov") {
+                            nov++
+                        }else if (DateTime === "Dec") {
+                            dec++
+                        }
+                    }
+
+                });
+
+                all.push(jan);
+                all.push(feb);
+                all.push(mar);
+                all.push(apr);
+                all.push(may);
+                all.push(jun);
+                all.push(jul);
+                all.push(aug);
+                all.push(sep);
+                all.push(oct);
+                all.push(nov);
+                all.push(dec);
+
+                console.log("a"+all);
+                showChart()
+            });
+        }
+
+        function showChart() {
+            var department = document.getElementById('department').value;
+            var year = document.getElementById('yearShow').value;
+            console.log(year);
+            
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "รายงานการแจ้งซ่อม" + department + " ประจำปี " + year
+                },
+                axisY: {
+                    title: "จำนวนการแจ้งซ่อม(ครั้ง)"
+                },
+                axisX: {
+                    title: "เดือน"
+                },
+                data: [{
+                    type: "column",
+                    showInLegend: true,
+                    name: "รายการซ่อมทั้งหมด" + department,
+                    color: "#7E817C",
+                    dataPoints: [{
+                        y: parseInt(all[0], 10),
+                        label: "ม.ค."
+                    }, {
+                        y: parseInt(all[1], 10),
+                        label: "ก.พ."
+                    }, {
+                        y: parseInt(all[2], 10),
+                        label: "มี.ค."
+                    }, {
+                        y: parseInt(all[3], 10),
+                        label: "เม.ย."
+                    }, {
+                        y: parseInt(all[4], 10),
+                        label: "พ.ค."
+                    }, {
+                        y: parseInt(all[5], 10),
+                        label: "มิ.ย."
+                    }, {
+                        y: parseInt(all[6], 10),
+                        label: "ก.ค."
+                    }, {
+                        y: parseInt(all[7], 10),
+                        label: "ส.ค."
+                    }, {
+                        y: parseInt(all[8], 10),
+                        label: "ก.ย."
+                    }, {
+                        y: parseInt(all[9], 10),
+                        label: "ต.ค."
+                    }, {
+                        y: parseInt(all[10], 10),
+                        label: "พ.ย."
+                    }, {
+                        y: parseInt(all[11], 10),
+                        label: "ธ.ค."
+                    }]
+                }, {
+                    type: "column",
+                    showInLegend: true,
+                    name: "รายการซ่อมที่เสร็จสิ้น" + department,
+                    color: "#32CCD1",
+                    dataPoints: [{
+                        y: parseInt(finish[0], 10),
+                        label: "ม.ค."
+                    }, {
+                        y: parseInt(finish[1], 10),
+                        label: "ก.พ."
+                    }, {
+                        y: parseInt(finish[2], 10),
+                        label: "มี.ค."
+                    }, {
+                        y: parseInt(finish[3], 10),
+                        label: "เม.ย."
+                    }, {
+                        y: parseInt(finish[4], 10),
+                        label: "พ.ค."
+                    }, {
+                        y: parseInt(finish[5], 10),
+                        label: "มิ.ย."
+                    }, {
+                        y: parseInt(finish[6], 10),
+                        label: "ก.ค."
+                    }, {
+                        y: parseInt(finish[7], 10),
+                        label: "ส.ค."
+                    }, {
+                        y: parseInt(finish[8], 10),
+                        label: "ก.ย."
+                    }, {
+                        y: parseInt(finish[9], 10),
+                        label: "ต.ค."
+                    }, {
+                        y: parseInt(finish[10], 10),
+                        label: "พ.ย."
+                    }, {
+                        y: parseInt(finish[11], 10),
+                        label: "ธ.ค."
+                    }]
+                }]
+            });
+            chart.render();
+        }
+
+        function table() {
+            var year = document.getElementById('yearShow').value;
+            department = document.getElementById('department').value;
+            var month = [];
+            detail = [];
+            var empID = [];
+            emp = [];
+            var techID = [];
+            tech = [];
+            dateRP = [];
+            var jan = 0
+            var feb = 0
+            var mar = 0
+            var apr = 0
+            var may = 0
+            var jun = 0
+            var jul = 0
+            var aug = 0
+            var sep = 0
+            var oct = 0
+            var nov = 0
+            var dec = 0
+            // var xmlhttp = new XMLHttpRequest();
+            // var url = "http://" + IP + ":8443/repairing";
+            // if (department !== 'ทุกแผนก') {
+            //     url = "http://" + IP + ":8443/repairing/department/" + department;
+            // }
+            // xmlhttp.open("GET", url, false);
+            // xmlhttp.send();
+            // if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            //     var output = xmlhttp.responseText;
+            //     var jsoutput = JSON.parse(output);
+            //     for (let i = 0; i < jsoutput.length; i++) {
+            //         detail.push(jsoutput[i].detail);
+            //         dateRP.push(jsoutput[i].dateRP);
+            //         empID.push(jsoutput[i].employeeID);
+            //         techID.push(jsoutput[i].technicainID);
+            //         month.push(jsoutput[i].date.substring(5, 7));
+            //     }
+            // }
+            // var xmlhttp = new XMLHttpRequest();
+            // var url1 = "http://" + IP + ":8443/employees";
+            // xmlhttp.open("GET", url1, false);
+            // xmlhttp.send();
+            // if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            //     var output = xmlhttp.responseText;
+            //     var jsoutput = JSON.parse(output);
+            //     for (let i = 0; i < empID.length; i++) {
+            //         for (let j = 0; j < jsoutput.length; j++) {
+            //             if (empID[i] === jsoutput[j].employeeID) {
+            //                 emp.push(jsoutput[j].firstName + ' ' + jsoutput[j].lastName);
+            //             }
+            //         }
+            //     }
+            // }
+            // var xmlhttp = new XMLHttpRequest();
+            // var url2 = "http://" + IP + ":8443/technicains";
+            // xmlhttp.open("GET", url2, false);
+            // xmlhttp.send();
+            // if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            //     var output = xmlhttp.responseText;
+            //     var jsoutput = JSON.parse(output);
+            //     for (let i = 0; i < techID.length; i++) {
+            //         if (techID[i] === null) {
+            //             tech.push('ยังไม่มีช่างที่รับผิดชอบ');
+            //         }
+            //         for (let j = 0; j < jsoutput.length; j++) {
+            //             if (techID[i] === jsoutput[j].technicainID) {
+            //                 tech.push(jsoutput[j].firstName + ' ' + jsoutput[j].lastName);
+            //             }
+            //         }
+            //     }
+            // }
+            // for (let i = 0; i < month.length; i++) {
+            //     if (month[i] === '01') {
+            //         jan++
+            //     } else if (month[i] === '02') {
+            //         feb++
+            //     } else if (month[i] === '03') {
+            //         mar++
+            //     } else if (month[i] === '04') {
+            //         apr++
+            //     } else if (month[i] === '05') {
+            //         may++;
+            //     } else if (month[i] === '06') {
+            //         jun++
+            //     } else if (month[i] === '07') {
+            //         jul++
+            //     } else if (month[i] === '08') {
+            //         aug++;
+            //     } else if (month[i] === '09') {
+            //         sep++
+            //     } else if (month[i] === '10') {
+            //         oct++
+            //     } else if (month[i] === '11') {
+            //         nov++
+            //     } else if (month[i] === '12') {
+            //         dec++
+            //     }
+            // }
+            // document.getElementById('detail').innerHTML = ""
+            // for (let i = 0; i < month.length; i++) {
+            //     if (dateRP[i] === null) {
+            //         dateRP[i] = 'ยังไม่ระบุ'
+            //     }
+            //     if (month[i] === '01') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + jan + '">มกราคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '02') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + feb + '">กุมภาพันธ์</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '03') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + mar + '">มีนาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '04') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + apr + '">เมษายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '05') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + may + '">พฤษภาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '06') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + jun + '">มิถุนายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '07') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + jul + '">กรกฎาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '08') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + aug + '">สิงหาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '09') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + sep + '">กันยายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '10') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + oct + '">ตุลาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '11') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + nov + '">พฤศจิกายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     } else if (month[i] === '12') {
+            //         if (month[i] !== month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<tr><td rowspan="' + dec + '">ธันวาาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         } else if (month[i] === month[i - 1]) {
+            //             document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+            //         }
+            //         document.getElementById('detail').innerHTML += '</tr>';
+            //     }
+            // }
+        }
+
     </script>
 
 
