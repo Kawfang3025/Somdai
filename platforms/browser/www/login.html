@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Bai+Jamjuree&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Hello World</title>
+</head>
+
+<body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCCfGx1IvaefAOdnXwUwdRsmLVa2mTxc6I",
+            authDomain: "somdai.firebaseapp.com",
+            databaseURL: "https://somdai.firebaseio.com",
+            projectId: "somdai",
+            storageBucket: "somdai.appspot.com",
+            messagingSenderId: "524262057903",
+            appId: "1:524262057903:web:911f71ef1d3b9b29aab15a",
+            measurementId: "G-RNKENSBQ91"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="img/logo.png" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center form_container">
+
+                    <form>
+                        <div id="alert"></div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="" class="form-control input_user" id="username" value="" placeholder="อีเมลล์">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" name="" class="form-control input_pass" id="password" value="" placeholder="รหัสผ่าน">
+                        </div>
+                    </form>
+                </div>
+                <div class="d-flex justify-content-center mt-3 login_container">
+                    <button type="button" name="button" class="btn login_btn" onclick="login()">เข้าสู่ระบบ</button>
+                </div>
+                <div class="mt-4">
+                    <div class="d-flex justify-content-center links" style="color: rgb(255, 255, 255)">
+                        ยังไม่มีบัญชีผู้ใช้? <a href="signup.html" class="ml-2">สมัครใช้งาน</a>
+                    </div>
+                    <div class="d-flex justify-content-center links">
+                        <a href="#">ลืมรหัส?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var login = function() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(error.code + ':' + error.message);
+                ons.notification.alert('Login failed');
+            });
+        };
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // User is signed in.
+                // Send user to home.html
+
+                localStorage.setItem("Email", user.email);
+                window.location.href = 'home.html';
+            }
+        });
+    </script>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>
