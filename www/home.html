@@ -134,7 +134,7 @@
         // เช็ค ตำแหน่งและแผนก
         if (department == "Engineering") {
             if (position == "Supervisor") {
-                db.collection("repairing").get().then(function(querySnapshot) {
+                db.collection("repairing").orderBy("repairingID", "desc").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         // doc.data() is never undefined for query doc snapshots
                         console.log(doc.id, " => ", doc.data());
@@ -146,13 +146,13 @@
                         DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                         name2 = "";
                         //เรียกชื่อผู้แจ้ง
-                        checkName(doc.data().employeeID);
+                        checkName(doc.data().employeeID, doc.data().repairingID);
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
                             '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
                             '<div  class="col-10 row">' +
-                            '<a class="col-7 text-truncate ' + doc.data().employeeID + '" style="font-weight:bold" ></a>' +
+                            '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
                             '<a class="col-12 text-truncate" style="font-weight:bold;color: blue;">' + doc.data().detail + '</a>' +
                             '</div> </div></div>';
@@ -161,7 +161,7 @@
                         var date = DateTime;
                         document.getElementById("result").innerHTML += '<tr onclick="showdetail(`' + doc.data().repairingID + '`)" >' +
                             // "<td>" + status + "</td>" +
-                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().employeeID + '" ></td>' +
+                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().repairingID + '" ></td>' +
                             '<td class"text-truncate" style="width: 45%">' + detail + "</td>" +
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
@@ -172,7 +172,7 @@
 
             } else {
                 let myID = (parseInt(localStorage.getItem("myID")));
-                db.collection("repairing").where("technicainID", "==", myID)
+                db.collection("repairing").where("technicainID", "==", myID).orderBy("repairingID", "desc")
                     .get()
                     .then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
@@ -186,13 +186,13 @@
                             DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                             name2 = "";
                             //เรียกชื่อผู้แจ้ง
-                            checkName(doc.data().employeeID);
+                            checkName(doc.data().employeeID, doc.data().repairingID);
 
                             // แสดงค่า
                             document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
                                 '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
                                 '<div  class="col-10 row">' +
-                                '<a class="col-7 text-truncate ' + doc.data().employeeID + '" style="font-weight:bold" ></a>' +
+                                '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                                 '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
                                 '<a class="col-12 text-truncate" style="font-weight:bold;color: blue;">' + doc.data().detail + '</a>' +
                                 '</div> </div></div>';
@@ -201,7 +201,7 @@
                             var date = DateTime;
                             document.getElementById("result").innerHTML += '<tr onclick="showdetail(`' + doc.data().repairingID + '`)" >' +
                                 // "<td>" + status + "</td>" +
-                                '<td class"text-truncate " style="width: 25%" id="' + doc.data().employeeID + '" ></td>' +
+                                '<td class"text-truncate " style="width: 25%" id="' + doc.data().repairingID + '" ></td>' +
                                 '<td class"text-truncate" style="width: 45%">' + detail + "</td>" +
                                 '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                                 "</tr>"
@@ -213,7 +213,7 @@
             }
         } else {
             var dep = localStorage.getItem("department");
-            db.collection("repairing").where("department", "==", dep)
+            db.collection("repairing").where("department", "==", dep).orderBy("repairingID", "desc")
                 .get()
                 .then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
@@ -228,13 +228,14 @@
                         DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                         name2 = "";
                         //เรียกชื่อผู้แจ้ง
-                        checkName(doc.data().employeeID);
+
+                        checkName(doc.data().employeeID, doc.data().repairingID);
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
                             '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
                             '<div  class="col-10 row">' +
-                            '<a class="col-7 text-truncate ' + doc.data().employeeID + '" style="font-weight:bold" ></a>' +
+                            '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
                             '<a class="col-12 text-truncate" style="font-weight:bold;color: blue;">' + doc.data().detail + '</a>' +
                             '</div> </div></div>';
@@ -243,7 +244,7 @@
                         var date = DateTime;
                         document.getElementById("result").innerHTML += '<tr onclick="showdetail(`' + doc.data().repairingID + '`)" >' +
                             // "<td>" + status + "</td>" +
-                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().employeeID + '" ></td>' +
+                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().repairingID + '" ></td>' +
                             '<td class"text-truncate" style="width: 45%">' + detail + "</td>" +
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
@@ -262,40 +263,43 @@
             }
         }
 
-        function checkName(ID) {
+        function checkName(ID, rep) {
             console.log(ID);
 
             var db = firebase.firestore();
-            db.collection("employees").where("employeeID", "==", ID)
+            db.collection("employees").where("employeeID", "==", ID).limit(1)
                 .get()
                 .then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         // doc.data() is never undefined for query doc snapshots
+                        var name1;
+                        console.log(rep);
                         console.log(doc.id, " => ", doc.data());
                         name1 = doc.data().firstName + " " + doc.data().lastName;
                         console.log(name1);
-
-                        var x = document.getElementsByClassName(ID);
+                        var x = document.getElementsByClassName(rep)
                         x[0].innerHTML = name1;
-                        document.getElementById(ID).innerHTML = name1;
+                        document.getElementById(rep).innerHTML = name1;
                     });
 
                 })
                 .catch(function(error) {
                     console.log("Error getting documents: ", error);
                 })
-            db.collection("technicain").where("technicainID", "==", ID)
+            db.collection("technicain").where("technicainID", "==", ID).limit(1)
                 .get()
                 .then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
+                        console.log(rep);
+
+                        var name3;
                         // doc.data() is never undefined for query doc snapshots
                         console.log(doc.id, " => ", doc.data());
-                        name1 = doc.data().firstName + " " + doc.data().lastName;
-
-                        var x = document.getElementsByClassName(ID);
-                        x[0].innerHTML = name1;
-
-                        document.getElementById(ID).innerHTML = name1;
+                        name3 = doc.data().firstName + " " + doc.data().lastName;
+                        console.log(name3);
+                        var x = document.getElementsByClassName(rep)
+                        x[0].innerHTML = name3;
+                        document.getElementById(rep).innerHTML = name3;
                     });
                 })
                 .catch(function(error) {

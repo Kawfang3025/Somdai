@@ -146,13 +146,13 @@
                         DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                         name2 = "";
                         //เรียกชื่อผู้แจ้ง
-                        checkName(doc.data().employeeID);
+                        checkName(doc.data().employeeID, doc.data().repairID);
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
                             '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
                             '<div  class="col-10 row">' +
-                            '<a class="col-7 text-truncate ' + doc.data().employeeID + '" style="font-weight:bold" ></a>' +
+                            '<a class="col-7 text-truncate ' + doc.data().repairID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
                             '<a class="col-12 text-truncate" style="font-weight:bold;color: blue;">' + doc.data().detail + '</a>' +
                             '</div> </div></div>';
@@ -161,7 +161,7 @@
                         var date = DateTime;
                         document.getElementById("result").innerHTML += '<tr onclick="showdetail(`' + doc.data().repairingID + '`)" >' +
                             // "<td>" + status + "</td>" +
-                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().employeeID + '" ></td>' +
+                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().repairID + '" ></td>' +
                             '<td class"text-truncate" style="width: 45%">' + detail + "</td>" +
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
@@ -186,13 +186,13 @@
                             DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                             name2 = "";
                             //เรียกชื่อผู้แจ้ง
-                            checkName(doc.data().employeeID);
+                            checkName(doc.data().employeeID, doc.data().repairID);
 
                             // แสดงค่า
                             document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
                                 '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
                                 '<div  class="col-10 row">' +
-                                '<a class="col-7 text-truncate ' + doc.data().employeeID + '" style="font-weight:bold" ></a>' +
+                                '<a class="col-7 text-truncate ' + doc.data().repairID + '" style="font-weight:bold" ></a>' +
                                 '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
                                 '<a class="col-12 text-truncate" style="font-weight:bold;color: blue;">' + doc.data().detail + '</a>' +
                                 '</div> </div></div>';
@@ -201,7 +201,7 @@
                             var date = DateTime;
                             document.getElementById("result").innerHTML += '<tr onclick="showdetail(`' + doc.data().repairingID + '`)" >' +
                                 // "<td>" + status + "</td>" +
-                                '<td class"text-truncate " style="width: 25%" id="' + doc.data().employeeID + '" ></td>' +
+                                '<td class"text-truncate " style="width: 25%" id="' + doc.data().repairID + '" ></td>' +
                                 '<td class"text-truncate" style="width: 45%">' + detail + "</td>" +
                                 '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                                 "</tr>"
@@ -228,13 +228,14 @@
                         DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                         name2 = "";
                         //เรียกชื่อผู้แจ้ง
-                        checkName(doc.data().employeeID);
+
+                        checkName(doc.data().employeeID, doc.data().repairID);
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
                             '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
                             '<div  class="col-10 row">' +
-                            '<a class="col-7 text-truncate ' + doc.data().employeeID + '" style="font-weight:bold" ></a>' +
+                            '<a class="col-7 text-truncate ' + doc.data().repairID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
                             '<a class="col-12 text-truncate" style="font-weight:bold;color: blue;">' + doc.data().detail + '</a>' +
                             '</div> </div></div>';
@@ -243,7 +244,7 @@
                         var date = DateTime;
                         document.getElementById("result").innerHTML += '<tr onclick="showdetail(`' + doc.data().repairingID + '`)" >' +
                             // "<td>" + status + "</td>" +
-                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().employeeID + '" ></td>' +
+                            '<td class"text-truncate " style="width: 25%" id="' + doc.data().repairID + '" ></td>' +
                             '<td class"text-truncate" style="width: 45%">' + detail + "</td>" +
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
@@ -262,7 +263,7 @@
             }
         }
 
-        function checkName(ID) {
+        function checkName(ID, RID) {
             console.log(ID);
 
             var db = firebase.firestore();
@@ -275,9 +276,9 @@
                         name1 = doc.data().firstName + " " + doc.data().lastName;
                         console.log(name1);
 
-                        var x = document.getElementsByClassName(ID);
+                        var x = document.getElementsByClassName(RID);
                         x[0].innerHTML = name1;
-                        document.getElementById(ID).innerHTML = name1;
+                        document.getElementById(RID).innerHTML = name1;
                     });
 
                 })
@@ -292,10 +293,10 @@
                         console.log(doc.id, " => ", doc.data());
                         name1 = doc.data().firstName + " " + doc.data().lastName;
 
-                        var x = document.getElementsByClassName(ID);
+                        var x = document.getElementsByClassName(RID);
                         x[0].innerHTML = name1;
 
-                        document.getElementById(ID).innerHTML = name1;
+                        document.getElementById(RID).innerHTML = name1;
                     });
                 })
                 .catch(function(error) {

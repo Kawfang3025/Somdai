@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Bai+Jamjuree&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+
+
+    <title>Take Pictures</title>
+    <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady() {
+            console.log(navigator.camera);
+        }
+    </script>
+    <style>
+        #btn {
+            font-size: 1.5rem;
+            line-height: 2.5rem;
+            margin: 1rem;
+        }
+        
+        #msg {
+            border: 1px solid #eee;
+            padding: 1rem;
+            margin: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCCfGx1IvaefAOdnXwUwdRsmLVa2mTxc6I",
+            authDomain: "somdai.firebaseapp.com",
+            databaseURL: "https://somdai.firebaseio.com",
+            projectId: "somdai",
+            storageBucket: "somdai.appspot.com",
+            messagingSenderId: "524262057903",
+            appId: "1:524262057903:web:911f71ef1d3b9b29aab15a",
+            measurementId: "G-RNKENSBQ91"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <div class="bs-example">
+        <nav class="navbar bg-dark  navbar-dark fixed-top" style="background-color: rgb(10, 6, 43)">
+            <!-- Toggler/collapsibe Button -->
+            <a id="main" class="m-0" style="color: rgb(255, 255, 255);height: 100%;">
+                <span style="cursor:pointer" onclick="openNav()"><label class="hamburger-icon">
+                        <span>&nbsp;</span>
+                <span>&nbsp;</span>
+                <span>&nbsp;</span>
+                </label>
+                </span>
+            </a>
+
+            <!-- <h4 class="text-light ">SomDai</h4> -->
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="logonav" style="width: 60px;">
+            </a>
+
+        </nav>
+        <div id="mySidenav" class="sidenav mt-5" onclick="closeNav()">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="col-8 ">
+                <img src=" img/profile.png" class="rounded-circle" alt="Cinque Terre" style="width: 100%">
+            </div>
+            <div class="col-16">
+                <div class="card" style="width: auto">
+                    <div class="card-body">
+                        <h5 class="card-title" id="fname">ชื่อ-สกุล</h5>
+                        <h6 class="card-subtitle mb-2 text-muted" id="position">ตำแหน่ง</h6>
+
+                    </div>
+                </div>
+            </div>
+            <a href="request.html">หน้าหลัก</a>
+            <a href="newRequest.html">แจ้งซ่อม</a>
+            <a href="report.html">รายงานการแจ้งซ่อม</a>
+            <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
+            <a href="about.html">ทีมผู้พัฒนา</a>
+            <a href="javascript:logout();">ออกจากระบบ</a>
+        </div>
+
+
+        <div class="container">
+            <div class="form-group pt-2">
+                <label for="exampleFormControlTextarea1">รายละเอียด/อาการชำรุด</label>
+                <textarea class="form-control" id="detail" rows="3"></textarea>
+            </div>
+            <p class="pr-3 pl-3"><img src="img/picture.png" alt="image" id="photo" style="width: 100% ;" /></p>
+            <!-- <form id="singleUploadForm" name="singleUploadForm">
+                <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                <button type="submit" class="primary submit-btn">Submit</button>
+            </form>
+            <div class="upload-response">
+                <div id="singleFileUploadError"></div>
+                <div id="singleFileUploadSuccess"></div>
+            </div> -->
+            <p class="center w-100"><button onclick="openCamera()">Take Picture</button></p>
+            <p id="msg" class="text-truncate " style="width: 80% ;"></p>
+            <a name="" id="" class="btn btn-primary " onclick="uploadFile()" role="button">ยืนยัน</a>
+        </div>
+    </div>
+    <!-- <script type="text/javascript" src="cordova.js"></script> -->
+    <script>
+        var file;
+        var storageRef = firebase.storage().ref();
+        var ref = storageRef.child('images/test.jpg');
+
+        function openCamera() {
+            navigator.camera.getPicture(onSuccess, onFail, {
+                quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL
+            });
+
+            function onSuccess(imageData) {
+                var image = document.getElementById('photo');
+                image.src = "data:image/jpeg;base64," + imageData;
+                file = imageData;
+
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
+
+        function uploadFile() {
+            var message = file;
+            var url;
+            ref.putString(message, 'base64').then(function(snapshot) {
+                console.log('Uploaded a base64 string!');
+                snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    console.log("File available at", downloadURL);
+                    url = downloadURL;
+                    insertRepair(url);
+                })
+
+            })
+
+        }
+
+
+
+        function insertRepair(imgUrl) {
+            var detail = document.getElementById('detail').value;
+            //create reparing ID
+            var docRef = db.collection("repairing").orderBy("repairingID", "desc").limit(1);
+            docRef.get()
+                .then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+                        console.log(doc.data().repairingID);
+                        let rep = ((parseInt(doc.data().repairingID)) + 1);
+                        console.log(imgUrl);
+                        addrep(rep)
+
+                    });
+                })
+                .catch(function(error) {
+                    console.log("Error getting documents: ", error);
+                });
+            // Add a new document with a generated id.
+            function addrep(rep) {
+                console.log(imgUrl);
+
+                db.collection("repairing").add({
+                        repairingID: rep,
+                        status: "ยังไม่ได้รับมอบหมาย",
+                        employeeID: (parseInt(localStorage.getItem("myID"))),
+                        date: firebase.firestore.Timestamp.fromDate(new Date()),
+                        department: localStorage.getItem("department"),
+                        detail: detail,
+                        img: imgUrl,
+                        statusHead: "n",
+                        statusTech: "n"
+
+                    })
+                    .then(function(docRef) {
+                        console.log("Document written with ID: ", docRef.id);
+                    })
+                    .catch(function(error) {
+                        console.error("Error adding document: ", error);
+                    });
+            }
+
+
+        }
+    </script>
+    <script type="text/javascript" src="js/sidebar.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+</body>
+
+</html>
