@@ -78,7 +78,7 @@
             กลับก่อนหน้า</a> -->
         </div>
         <div class="container">
-            <img src="img/fix.jpg" class="img-fluid pt-3 pb-3" alt="Responsive image">
+            <img src="" id="photo" class="img-fluid pt-3 pb-3" alt="Responsive image">
 
             <div class="row">
                 <div class="col-3"><img src="img/profile.png" class="rounded-circle img-fluid" style="width: auto" alt="Cinque Terre"></div>
@@ -167,6 +167,7 @@
                 // doc.data() is never undefined for query doc snapshots
                 localStorage.setItem("docID", doc.id);
                 document.getElementById("detailshow").innerHTML = doc.data().detail;
+                document.getElementById("photo").src = doc.data().img;
 
                 if (!(doc.data().technicainID)) {
                     // ถ้ายังไม่มอบหมายงาน
