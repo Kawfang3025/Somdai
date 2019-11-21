@@ -41,10 +41,8 @@
 
 <body>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -92,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <a href="request.html">หน้าหลัก</a>
+            <a href="home.html">หน้าหลัก</a>
             <a href="newRequest.html">แจ้งซ่อม</a>
             <a href="report.html">รายงานการแจ้งซ่อม</a>
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
@@ -124,7 +122,9 @@
     <script>
         var file;
         var storageRef = firebase.storage().ref();
-        var ref = storageRef.child('images/test.jpg');
+        var imgName = new Date()
+        var ref = storageRef.child('images/' + imgName + '.jpg');
+
 
         function openCamera() {
             navigator.camera.getPicture(onSuccess, onFail, {
@@ -159,8 +159,6 @@
 
         }
 
-
-
         function insertRepair(imgUrl) {
             var detail = document.getElementById('detail').value;
             //create reparing ID
@@ -180,6 +178,7 @@
                 .catch(function(error) {
                     console.log("Error getting documents: ", error);
                 });
+
             // Add a new document with a generated id.
             function addrep(rep) {
                 console.log(imgUrl);
@@ -194,10 +193,10 @@
                         img: imgUrl,
                         statusHead: "n",
                         statusTech: "n"
-
                     })
                     .then(function(docRef) {
                         console.log("Document written with ID: ", docRef.id);
+                        window.location.href = 'home.html';
                     })
                     .catch(function(error) {
                         console.error("Error adding document: ", error);
