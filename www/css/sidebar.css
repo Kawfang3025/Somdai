@@ -93,3 +93,10 @@
 .border {
     background-color: rgba(204, 255, 250, 0.36);
 }
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    vertical-align: middle;
+    padding-bottom: 3px;
+}
