@@ -41,8 +41,10 @@
 
 <body>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -78,7 +80,7 @@
         </nav>
         <div id="mySidenav" class="sidenav mt-5" onclick="closeNav()">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <div class="col-8 center" style="text-align:right;">
+            <div class="col-8 ">
                 <img id="navpic" src=" img/profile.png" class="rounded-circle avatar" alt="Cinque Terre">
             </div>
             <div class="col-16">
@@ -90,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <a href="home.html">หน้าหลัก</a>
+            <a href="request.html">หน้าหลัก</a>
             <a href="newRequest.html">แจ้งซ่อม</a>
             <a href="report.html">รายงานการแจ้งซ่อม</a>
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
@@ -121,10 +123,9 @@
     <!-- <script type="text/javascript" src="cordova.js"></script> -->
     <script>
         var file;
+        var imageName = new Date();
         var storageRef = firebase.storage().ref();
-        var imgName = new Date()
-        var ref = storageRef.child('images/' + imgName + '.jpg');
-
+        var ref = storageRef.child('images/' + imageName + '.jpg');
 
         function openCamera() {
             navigator.camera.getPicture(onSuccess, onFail, {
@@ -136,7 +137,6 @@
                 var image = document.getElementById('photo');
                 image.src = "data:image/jpeg;base64," + imageData;
                 file = imageData;
-
             }
 
             function onFail(message) {
@@ -154,9 +154,7 @@
                     url = downloadURL;
                     insertRepair(url);
                 })
-
             })
-
         }
 
         function insertRepair(imgUrl) {
@@ -172,17 +170,14 @@
                         let rep = ((parseInt(doc.data().repairingID)) + 1);
                         console.log(imgUrl);
                         addrep(rep)
-
                     });
                 })
                 .catch(function(error) {
                     console.log("Error getting documents: ", error);
                 });
-
             // Add a new document with a generated id.
             function addrep(rep) {
                 console.log(imgUrl);
-
                 db.collection("repairing").add({
                         repairingID: rep,
                         status: "ยังไม่ได้รับมอบหมาย",
@@ -196,14 +191,12 @@
                     })
                     .then(function(docRef) {
                         console.log("Document written with ID: ", docRef.id);
-                        window.location.href = 'home.html';
+                        window.location.href = "home.html"
                     })
                     .catch(function(error) {
                         console.error("Error adding document: ", error);
                     });
             }
-
-
         }
     </script>
     <script type="text/javascript" src="js/sidebar.js"></script>
