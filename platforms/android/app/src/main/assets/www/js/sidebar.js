@@ -26,6 +26,7 @@ db.collection("employees").where("email", "==", email)
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
             localStorage.setItem("myID", doc.data().employeeID);
+            localStorage.setItem("mydoc", doc.id);
         });
     })
     .catch(function(error) {
@@ -43,6 +44,7 @@ db.collection("technicain").where("email", "==", email)
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
             localStorage.setItem("myID", doc.data().technicainID);
+            localStorage.setItem("mydoc", doc.id);
         });
     })
     .catch(function(error) {

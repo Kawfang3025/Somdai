@@ -11,6 +11,12 @@
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            console.log(navigator.camera);
+        }
+    </script>
     <title>SomDai</title>
     <style>
         body {
@@ -101,6 +107,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
 
     <script>
+
         // Your web app's Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyCCfGx1IvaefAOdnXwUwdRsmLVa2mTxc6I",
@@ -173,7 +180,7 @@
             <form>
                 <div class="d-flex justify-content-center mt-1">
                     <div class="mt-3">
-                        <img src="img/profile.png" class="brand_logo" alt="" id="img">
+                        <img src="img/profile.png" class="brand_logo" alt="" id="img" onclick="upload()">
                     </div>
                 </div>
                 <div>
@@ -261,6 +268,7 @@
         //ข้อมูลผู้แจ้ง
         var department = localStorage.getItem('department');
         var EmpID = (parseInt(localStorage.getItem('EmpID')));
+        var mydoc = localStorage.getItem("mydoc")
 
         var email;
         var firstName;
@@ -313,9 +321,8 @@
             department = document.getElementById("department").value;
             positions = document.getElementById("positions").value;
             telNumber = document.getElementById("tel").value;
-            document.getElementById("tel").value = password;
             console.log(positions);
-
+            
             data.get()
                 .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
@@ -338,7 +345,7 @@
                                 console.log(password);
                                 closeForm();
                                 setTimeout(function () {
-                                    
+
                                     window.location.href = 'home.html'
                                 }, 2000);
                                 // window.location.href = 'home.html';
@@ -353,6 +360,39 @@
                     console.log("Error getting documents: ", error);
                 })
         }
+        var ref = db.collection("employees").doc(mydoc);
+        console.log(EmpID);
+        if (department === "Engineering") {
+            ref = db.collection("technicain").doc(mydoc);
+        }
+        function upload() {
+            navigator.camera.getPicture(onSuccess, onFail, {
+                quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL
+            });
+
+            function onSuccess(imageData) {
+                var url;
+                ref.putString(imageData, 'base64').then(function (snapshot) {
+                    console.log('Uploaded a base64 string!');
+                    snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                        console.log("File available at", downloadURL);
+                        url = downloadURL;
+                        //updatePicture(url);
+
+                    })
+                }).then(function () {
+                    ref.update({
+                        img : url
+                    })
+                });
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
+
         function confirm() {
             document.getElementById("myForm").style.display = "block";
         }
@@ -364,6 +404,7 @@
     </script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
