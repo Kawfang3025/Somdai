@@ -259,6 +259,7 @@
 
         //ข้อมูลผู้แจ้ง
         var department = localStorage.getItem('department');
+<<<<<<< HEAD
         var EmpID = (parseInt(localStorage.getItem('EmpID')));
 
         var email;
@@ -271,6 +272,11 @@
         var id;
         var data = db.collection("employees").where("employeeID", "==", EmpID);
         console.log(EmpID);
+=======
+        var EmpID = localStorage.getItem("myID");
+        console.log(department);
+        
+>>>>>>> ca53e63a592d5c9ccaebe11b96f88752130489c0
         if (department === "Engineering") {
             data = db.collection("technicain").where("technicainID", "==", EmpID);
         }

@@ -35,7 +35,10 @@ module.exports.metadata =
 // TOP OF METADATA
 {
     "cordova-plugin-whitelist": "1.3.4",
-    "cordova-plugin-camera": "4.1.0"
+    "cordova-plugin-camera": "4.1.0",
+    "cordova-plugin-androidx": "1.0.2",
+    "cordova-plugin-androidx-adapter": "1.1.0",
+    "cordova-plugin-firebasex": "7.0.1"
 }
 // BOTTOM OF METADATA
 });
