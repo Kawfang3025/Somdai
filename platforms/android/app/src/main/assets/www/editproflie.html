@@ -270,7 +270,7 @@
         var department = localStorage.getItem('department');
         var EmpID = (parseInt(localStorage.getItem('EmpID')));
         var mydoc = localStorage.getItem("mydoc")
-
+        var Email = localStorage.getItem('Email')
         var email;
         var firstName;
         var lastName;
@@ -280,20 +280,22 @@
         var telNumber;
         var img;
         var id;
-        var data = db.collection("employees").where("employeeID", "==", EmpID);
+        var data = db.collection("employees").where("email", "==", Email);
         var data2 = db.collection("employees");
         console.log(EmpID);
         if (department === "Engineering") {
-            data = db.collection("technicain").where("technicainID", "==", EmpID);
+            data = db.collection("technicain").where("email", "==", Email);
             data2 = db.collection("technicain");
         }
 
         data.get()
             .then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
+                    console.log("293: " + doc.data().department);
+
                     firstName = doc.data().firstName
                     lastName = doc.data().lastName;
-                    department = doc.data().department
+                    department = doc.data().department;
                     positions = doc.data().positions;
                     email = doc.data().email;
                     telNumber = doc.data().telNumber;
@@ -399,15 +401,16 @@
                     console.log("File available at", downloadURL);
                     url = downloadURL;
                     //updatePicture(url);
+                    ref.update({
+                        img: url
+                    }).then(function() {
+                        console.log("update already");
+                        location.reload();
+                    });
 
                 })
             }).then(function() {
-                ref.update({
-                    img: url
-                }).then(function() {
-                    console.log("update already");
-                    location.reload();
-                });
+
             });
         }
 

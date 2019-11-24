@@ -401,15 +401,16 @@
                     console.log("File available at", downloadURL);
                     url = downloadURL;
                     //updatePicture(url);
+                    ref.update({
+                        img: url
+                    }).then(function() {
+                        console.log("update already");
+                        location.reload();
+                    });
 
                 })
             }).then(function() {
-                ref.update({
-                    img: url
-                }).then(function() {
-                    console.log("update already");
-                    location.reload();
-                });
+
             });
         }
 
