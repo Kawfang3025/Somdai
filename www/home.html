@@ -96,8 +96,9 @@
             <a href="newRequest.html">แจ้งซ่อม</a>
             <a href="report.html">รายงานการแจ้งซ่อม</a>
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
+            <a href="editpassword.html">แก้ไขรหัสผ่าน</a>
             <a href="about.html">ทีมผู้พัฒนา</a>
-            <a href="javascript:logout();">ออกจากระบบ</a>
+            <a href="logout.html">ออกจากระบบ</a>
         </div>
         <!-- <div id="main">
             <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
@@ -152,6 +153,7 @@
         var position = localStorage.getItem("position");
         var department = localStorage.getItem("department");
         var name2;
+        var n = 0;
         // เช็ค ตำแหน่งและแผนก
         if (department == "Engineering") {
             if (position == "Supervisor") {
@@ -166,12 +168,13 @@
                         DateTime = DateTime.toUTCString();
                         DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                         name2 = "";
+
                         //เรียกชื่อผู้แจ้ง
-                        checkName(doc.data().employeeID, doc.data().repairingID);
+                        checkName(doc.data().employeeID, doc.data().repairingID, n);
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
-                            '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
+                            '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="'+n+'">' +
                             '<div  class="col-10 row">' +
                             '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
@@ -187,7 +190,7 @@
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
 
-
+                            n++;
                     });
                     $(document).ready(function() {
                         $('#dtBasicExample').DataTable();
@@ -215,7 +218,7 @@
 
                             // แสดงค่า
                             document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
-                                '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
+                                '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="'+n+'">' +
                                 '<div  class="col-10 row">' +
                                 '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                                 '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
@@ -231,7 +234,7 @@
                                 '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                                 "</tr>"
 
-
+                                n++;
                         });
                         $(document).ready(function() {
                             $('#dtBasicExample').DataTable();
@@ -265,7 +268,7 @@
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
-                            '<img src="img/picpro.jpg" class="col-2 rounded-circle pl-0 pr-0" width="100%">' +
+                            '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="'+n+'">' +
                             '<div  class="col-10 row">' +
                             '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
@@ -281,7 +284,7 @@
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
 
-
+                            n++;
                     });
                     $(document).ready(function() {
                         $('#dtBasicExample').DataTable();
@@ -301,7 +304,7 @@
             }
         }
 
-        function checkName(ID, rep) {
+        function checkName(ID, rep, n) {
             console.log(ID);
 
             var db = firebase.firestore();
@@ -318,6 +321,7 @@
                         var x = document.getElementsByClassName(rep)
                         x[0].innerHTML = name1;
                         document.getElementById(rep).innerHTML = name1;
+                        document.getElementById(n).src = doc.data().img;
                     });
 
                 })
@@ -338,6 +342,7 @@
                         var x = document.getElementsByClassName(rep)
                         x[0].innerHTML = name3;
                         document.getElementById(rep).innerHTML = name3;
+                        document.getElementById(n).src = doc.data().img;
                     });
                 })
                 .catch(function(error) {

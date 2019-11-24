@@ -26,6 +26,7 @@ db.collection("employees").where("email", "==", email)
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
             localStorage.setItem("myID", doc.data().employeeID);
+            localStorage.setItem("mydoc", doc.id);
         });
     })
     .catch(function(error) {
@@ -43,21 +44,26 @@ db.collection("technicain").where("email", "==", email)
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
             localStorage.setItem("myID", doc.data().technicainID);
+            localStorage.setItem("mydoc", doc.id);
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
 
-function logout() {
-    firebase.auth().signOut().then(function() {
-        // Sign-out successful.
-        window.location.href = 'index.html';
-        alert('See you again soon').then(function() {
-            localStorage.clear("Email");
+// function logout() {
+   
+//     // Initialize Firebase
+//     firebase.initializeApp(firebaseConfig);
+//     firebase.auth().signOut().then(function() {
+//         // Sign-out successful.
+        
+//         alert('See you again soon').then(function() {
+//             localStorage.clear("Email");
 
-        });
-    }).catch(function(error) {
-        // An error happened.
-    });
-}
+//         });
+//         window.location.href = 'index.html';
+//     }).catch(function(error) {
+//         // An error happened.
+//     });
+// }

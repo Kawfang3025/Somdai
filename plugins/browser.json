@@ -1,40 +1,38 @@
 {
-  "prepare_queue": {
-    "installed": [],
-    "uninstalled": []
-  },
-  "config_munge": {
-    "files": {}
-  },
-  "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
     },
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+    "config_munge": {
+        "files": {}
     },
-    "cordova-plugin-firebasex": {
-      "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
-      "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
-      "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-local-notification": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-firebasex": {
+            "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
+            "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
+            "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-local-notification": {
+            "cordova-plugin-camera": {
+                "PACKAGE_NAME": "io.cordova.hellocordova"
+            }
+        },
+        "dependent_plugins": {
+            "cordova-plugin-androidx": {
+                "PACKAGE_NAME": "io.cordova.hellocordova"
+            },
+            "cordova-plugin-androidx-adapter": {
+                "PACKAGE_NAME": "io.cordova.hellocordova"
+            },
+            "cordova-plugin-device": {
+                "PACKAGE_NAME": "io.cordova.hellocordova"
+            },
+            "cordova-plugin-badge": {
+                "PACKAGE_NAME": "io.cordova.hellocordova"
+            }
+        }
     }
-  },
-  "dependent_plugins": {
-    "cordova-plugin-androidx": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-androidx-adapter": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-badge": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    }
-  }
-}
