@@ -157,6 +157,8 @@
         // เช็ค ตำแหน่งและแผนก
         if (department == "Engineering") {
             if (position == "Supervisor") {
+                console.log("หัวหน้าช่าง");
+
                 db.collection("repairing").orderBy("repairingID", "desc").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         // doc.data() is never undefined for query doc snapshots
@@ -174,7 +176,7 @@
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
-                            '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="'+n+'">' +
+                            '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="' + n + '">' +
                             '<div  class="col-10 row">' +
                             '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
@@ -190,7 +192,7 @@
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
 
-                            n++;
+                        n++;
                     });
                     $(document).ready(function() {
                         $('#dtBasicExample').DataTable();
@@ -199,6 +201,7 @@
                 });
 
             } else {
+                console.log("ช่าง");
                 let myID = (parseInt(localStorage.getItem("myID")));
                 db.collection("repairing").where("technicainID", "==", myID).orderBy("repairingID", "desc")
                     .get()
@@ -214,11 +217,11 @@
                             DateTime = DateTime.split(' ').slice(0, 4).join(' ');
                             name2 = "";
                             //เรียกชื่อผู้แจ้ง
-                            checkName(doc.data().employeeID, doc.data().repairingID);
+                            checkName(doc.data().employeeID, doc.data().repairingID, n);
 
                             // แสดงค่า
                             document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
-                                '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="'+n+'">' +
+                                '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="' + n + '">' +
                                 '<div  class="col-10 row">' +
                                 '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                                 '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
@@ -234,7 +237,7 @@
                                 '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                                 "</tr>"
 
-                                n++;
+                            n++;
                         });
                         $(document).ready(function() {
                             $('#dtBasicExample').DataTable();
@@ -246,7 +249,8 @@
 
         } else {
             console.log("55555555555555555555555");
-            
+            console.log("พนักงาน");
+
             var dep = localStorage.getItem("department");
             console.log(dep);
 
@@ -266,11 +270,11 @@
                         name2 = "";
                         //เรียกชื่อผู้แจ้ง
 
-                        checkName(doc.data().employeeID, doc.data().repairingID);
+                        checkName(doc.data().employeeID, doc.data().repairingID, n);
 
                         // แสดงค่า
                         document.getElementById('requestlist').innerHTML += '<div class="border border-secondary rounded row pt-3 pb-3 mb-1" onclick="showdetail(`' + doc.data().employeeID + '`,`' + doc.data().repairingID + '`,`' + docID + '`)"  class="row"><i class="fas fa-circle ml-1 " style="color:' + checkColor(doc.data().statusHead) + '"></i>' +
-                            '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="'+n+'">' +
+                            '<img src="" class="col-2 rounded-circle pl-0 pr-0" width="100%" id ="' + n + '">' +
                             '<div  class="col-10 row">' +
                             '<a class="col-7 text-truncate ' + doc.data().repairingID + '" style="font-weight:bold" ></a>' +
                             '<a class="col-5" style="font-weight:bold;">' + DateTime + '</a>' +
@@ -286,7 +290,7 @@
                             '<td class"text-truncate" style="width: 30%">' + date + "</td>" +
                             "</tr>"
 
-                            n++;
+                        n++;
                     });
                     $(document).ready(function() {
                         $('#dtBasicExample').DataTable();

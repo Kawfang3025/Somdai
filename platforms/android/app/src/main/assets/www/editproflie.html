@@ -12,8 +12,8 @@
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
             console.log(navigator.camera);
         }
     </script>
@@ -107,7 +107,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
 
     <script>
-        
+
         // Your web app's Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyCCfGx1IvaefAOdnXwUwdRsmLVa2mTxc6I",
@@ -161,7 +161,7 @@
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
             <a href="editpassword.html">แก้ไขรหัสผ่าน</a>
             <a href="about.html">ทีมผู้พัฒนา</a>
-            <a href="javascript:logout();">ออกจากระบบ</a>
+            <a href="logout.html">ออกจากระบบ</a>
         </div>
         <div id="popup">
         </div>
@@ -280,9 +280,11 @@
         var img;
         var id;
         var data = db.collection("employees").where("employeeID", "==", EmpID);
+        var data2 = db.collection("employees");
         console.log(EmpID);
         if (department === "Engineering") {
             data = db.collection("technicain").where("technicainID", "==", EmpID);
+            data2 = db.collection("technicain");
         }
 
         data.get()
@@ -321,9 +323,8 @@
             department = document.getElementById("department").value;
             positions = document.getElementById("positions").value;
             telNumber = document.getElementById("tel").value;
-            document.getElementById("tel").value = password;
             console.log(positions);
-
+            
             data.get()
                 .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
@@ -333,7 +334,7 @@
 
                         if (doc.data().password === password) {
                             console.log(firstName + " " + lastName);
-                            let Ref = db.collection("technicain").doc(id);
+                            let Ref = data2.doc(id);
                             let updateSingle = Ref.update({
                                 firstName: firstName,
                                 lastName: lastName,
@@ -361,6 +362,11 @@
                     console.log("Error getting documents: ", error);
                 })
         }
+        var ref = db.collection("employees").doc(mydoc);
+        console.log(EmpID);
+        if (department === "Engineering") {
+            ref = db.collection("technicain").doc(mydoc);
+        }
         function upload() {
             navigator.camera.getPicture(onSuccess, onFail, {
                 quality: 50,
@@ -375,18 +381,12 @@
                         console.log("File available at", downloadURL);
                         url = downloadURL;
                         //updatePicture(url);
-                        var ref = db.collection("employees").doc(mydoc);
-                        console.log(EmpID);
-                        if (department === "Engineering") {
-                            data = db.collection("technicain").doc(mydoc);
-                        }
-                        ref.update({ 
-                            img : url
-                        })
 
                     })
-                }) .catch(function(error) {
-                    console.log("Error getting documents: ", error);
+                }).then(function () {
+                    ref.update({
+                        img : url
+                    })
                 });
             }
 
@@ -406,6 +406,7 @@
     </script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -72,7 +72,7 @@
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
             <a href="editpassword.html">แก้ไขรหัสผ่าน</a>
             <a href="about.html">ทีมผู้พัฒนา</a>
-            <a href="javascript:logout();">ออกจากระบบ</a>
+            <a href="logout.html">ออกจากระบบ</a>
         </div>
         <div class="container" style="padding-left: 0%;padding-right: 0%">
             <!-- <a name="" id="" class="btn btn-dark rounded-0 top-left mt-2" href="request.html" role="button">
@@ -82,7 +82,8 @@
             <img src="" id="photo" class="img-fluid pt-3 pb-3"  alt="Responsive image">
 
             <div class="row">
-                <div class="col-3"><img src="img/profile.png" class="rounded-circle img-fluid" style="width: auto" alt="Cinque Terre"></div>
+                <div class="col-3"><img src="img/profile.png" class="rounded-circle img-fluid" style="width: 200px;
+                    height: 100px;" alt="Cinque Terre" id="pic"></div>
                 <div class="col-6">
                     <div class="row" id="requester">
                         <div class="col-12 font-weight-bold" id="name"></div>
@@ -137,6 +138,7 @@
                 document.getElementById("name").innerHTML = name1;
                 document.getElementById("poswithdep").innerHTML = doc.data().positions + " - " + doc.data().department;
                 document.getElementById("tel").innerHTML = doc.data().telNumber;
+                document.getElementById("pic").src = doc.data().img;
             });
 
         })
@@ -154,6 +156,7 @@
                 document.getElementById("name").innerHTML = name1;
                 document.getElementById("poswithdep").innerHTML = doc.data().positions + " - " + doc.data().department;
                 document.getElementById("tel").innerHTML = doc.data().telNumber;
+                document.getElementById("pic").src = doc.data().img;
             });
         })
         .catch(function(error) {

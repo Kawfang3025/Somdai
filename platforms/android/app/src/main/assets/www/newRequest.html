@@ -98,7 +98,7 @@
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
             <a href="editpassword.html">แก้ไขรหัสผ่าน</a>
             <a href="about.html">ทีมผู้พัฒนา</a>
-            <a href="javascript:logout();">ออกจากระบบ</a>
+            <a href="logout.html">ออกจากระบบ</a>
         </div>
 
 
@@ -180,61 +180,43 @@
             function addrep(rep) {
                 console.log(imgUrl);
                 db.collection("repairing").add({
-                    repairingID: rep,
-                    status: "ยังไม่ได้รับมอบหมาย",
-                    employeeID: (parseInt(localStorage.getItem("myID"))),
-                    date: firebase.firestore.Timestamp.fromDate(new Date()),
-                    department: localStorage.getItem("department"),
-                    detail: detail,
-                    img: imgUrl,
-                    statusHead: "n",
-                    statusTech: "n"
-                })
-                sendNoti();
-                .then(function(docRef) {
-                        console.log("Document written with ID: ", docRef.id);
+                        repairingID: rep,
+                        status: "ยังไม่ได้รับมอบหมาย",
+                        employeeID: (parseInt(localStorage.getItem("myID"))),
+                        date: firebase.firestore.Timestamp.fromDate(new Date()),
+                        department: localStorage.getItem("department"),
+                        detail: detail,
+                        img: imgUrl,
+                        statusHead: "n",
+                        statusTech: "n"
 
+                    })
+                    .then(function(docRef) {
+                        console.log("Document written with ID: ", docRef.id);
+                        // sendNoti();
                         window.location.href = "home.html"
                     })
                     .catch(function(error) {
                         console.error("Error adding document: ", error);
                     });
             }
-        }
 
-        function sendNoti() {
-            var data = JSON.stringify({
-                "data": {
-                    "title": "New Text Message",
-                    "image": "https://firebase.google.com/images/social.png",
-                    "message": "Hello how are you?"
-                },
-                "to": "cnnTNF55qhU:APA91bGY-FTGWrBlGeapKHVxaFjj9OtTH7SABFMHK1gqkSEbacfOKctQmZe-BWe7m65X87GIKN4viXLVpJXM3Pzh-woR5otvcBoNppzQxfYSKTizo614FQba0Gf1IpQaAWEUgfDureAd"
-            });
-
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
-            xhr.addEventListener("readystatechange", function() {
-                if (this.readyState === 4) {
-                    console.log(this.responseText);
-                }
-            });
-
-            xhr.open("POST", "https://fcm.googleapis.com/fcm/send");
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.setRequestHeader("Authorization", "key=AIzaSyD3tzVBE8tOPj4mfpejx_W5pE67UkNPDn8");
-            xhr.setRequestHeader("User-Agent", "PostmanRuntime/7.19.0");
-            xhr.setRequestHeader("Accept", "*/*");
-            xhr.setRequestHeader("Cache-Control", "no-cache");
-            xhr.setRequestHeader("Postman-Token", "344eb37a-a263-4526-a2ea-544b1152bf23,b60bd271-4505-4d6a-8b79-57593b08dd2b");
-            xhr.setRequestHeader("Host", "fcm.googleapis.com");
-            xhr.setRequestHeader("Accept-Encoding", "gzip, deflate");
-            xhr.setRequestHeader("Content-Length", "316");
-            xhr.setRequestHeader("Connection", "keep-alive");
-            xhr.setRequestHeader("cache-control", "no-cache");
-
-            xhr.send(data);
+            function sendNoti() {
+                // Send a POST request
+                axios({
+                    method: 'post',
+                    url: 'https://fcm.googleapis.com/fcm/send',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "key=AIzaSyD3tzVBE8tOPj4mfpejx_W5pE67UkNPDn8"
+                    },
+                    data: {
+                        "title": "New Text Message",
+                        "image": "https://firebase.google.com/images/social.png",
+                        "message": "Hello how are you?"
+                    }
+                });
+            }
         }
     </script>
     <script type="text/javascript" src="js/sidebar.js"></script>
