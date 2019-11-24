@@ -279,10 +279,13 @@
         var telNumber;
         var img;
         var id;
+        
         var data = db.collection("employees").where("employeeID", "==", EmpID);
+        var data2 = db.collection("employees");
         console.log(EmpID);
         if (department === "Engineering") {
             data = db.collection("technicain").where("technicainID", "==", EmpID);
+            data2 = db.collection("technicain");
         }
 
         data.get()
@@ -332,7 +335,7 @@
 
                         if (doc.data().password === password) {
                             console.log(firstName + " " + lastName);
-                            let Ref = db.collection("technicain").doc(id);
+                            let Ref = data2.doc(id);
                             let updateSingle = Ref.update({
                                 firstName: firstName,
                                 lastName: lastName,
