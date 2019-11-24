@@ -3,9 +3,11 @@
 
 <head>
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Bai+Jamjuree&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -40,9 +42,9 @@
             <a id="main" class="m-0" style="color: rgb(255, 255, 255);height: 100%;">
                 <span style="cursor:pointer" onclick="openNav()"><label class="hamburger-icon">
                         <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                </label>
+                        <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                    </label>
                 </span>
             </a>
 
@@ -79,7 +81,7 @@
             กลับก่อนหน้า</a> -->
         </div>
         <div class="container">
-            <img src="" id="photo" class="img-fluid pt-3 pb-3"  alt="Responsive image">
+            <img src="" id="photo" class="img-fluid pt-3 pb-3" alt="Responsive image">
 
             <div class="row">
                 <div class="col-3"><img src="img/profile.png" class="rounded-circle img-fluid" style="width: 200px;
@@ -98,8 +100,9 @@
                 <p class="p-1 text-center " id="detailshow"></p>
             </div>
 
-            <div class="border border-info rounded mt-2" id="setTask" style="color: aliceblue;background-color: rgb(0, 146, 185);">
-                <div class="font-weight-bold p-1 lead">มอบหมายงาน</div>
+            <div class="border border-info rounded mt-2" id="setTask"
+                style="color: aliceblue;background-color: rgb(0, 146, 185);">
+                <div class="font-weight-bold p-1 lead" id="noTask">มอบหมายงาน</div>
                 <select class="form-control text-center" id="task" style="width: 85%">
                     <option>เลือกช่าง</option>
 
@@ -116,21 +119,29 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 <script>
     var db = firebase.firestore();
 
     //ข้อมูลผู้แจ้ง
     let EmpID = (parseInt(localStorage.getItem('EmpID')));
     var name1;
-    console.log(EmpID);
+    var department = localStorage.getItem("department");
+    var position = localStorage.getItem("position");
+    var repairingID;
 
     db.collection("employees").where("employeeID", "==", EmpID)
         .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
                 // doc.data() is never undefined for query doc snapshots
                 console.log(doc.id, " => ", doc.data());
                 name1 = doc.data().firstName + " " + doc.data().lastName;
@@ -142,13 +153,13 @@
             });
 
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log("Error getting documents: ", error);
         })
     db.collection("technicain").where("technicainID", "==", EmpID)
         .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
                 // doc.data() is never undefined for query doc snapshots
                 console.log(doc.id, " => ", doc.data());
                 name1 = doc.data().firstName + " " + doc.data().lastName;
@@ -159,15 +170,15 @@
                 document.getElementById("pic").src = doc.data().img;
             });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log("Error getting documents: ", error);
         });
     //แสดงรายละเอียดการแจ้ง
     let repID = (parseInt(localStorage.getItem("repairID")));
     db.collection("repairing").where("repairingID", "==", repID)
         .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
                 // doc.data() is never undefined for query doc snapshots
                 localStorage.setItem("docID", doc.id);
                 document.getElementById("detailshow").innerHTML = doc.data().detail;
@@ -175,15 +186,21 @@
 
                 if (!(doc.data().technicainID)) {
                     // ถ้ายังไม่มอบหมายงาน
-                    db.collection("technicain").get().then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
+                    if (department == "Engineering") {
+                        db.collection("technicain").get().then(function (querySnapshot) {
+                            querySnapshot.forEach(function (doc) {
 
-                            // doc.data() is never undefined for query doc snapshots
-                            document.getElementById('task').innerHTML += "<option value='" + doc.data().technicainID + "'>" + '(ช่าง' + doc.data().nickname + ')' + doc.data().firstName + "</option>"
+                                // doc.data() is never undefined for query doc snapshots
+                                document.getElementById('task').innerHTML += "<option value='" + doc.data().technicainID + "'>" + '(ช่าง' + doc.data().nickname + ')' + doc.data().firstName + "</option>"
+                            });
+                        }).catch(function (error) {
+                            console.log("Error getting documents: ", error);
                         });
-                    }).catch(function(error) {
-                        console.log("Error getting documents: ", error);
-                    });
+                    } else {
+
+                        document.getElementById("noTask").innerHTML = '<h4 class="text-center">ยังไม่ได้มอบหมายงาน</h4>';
+                    }
+
 
                 } else {
                     // ถ้ามอบหมายงานให้ช่างแล้ว
@@ -192,20 +209,52 @@
                     let TechID = (parseInt(doc.data().technicainID));
                     db.collection("technicain").where("technicainID", "==", TechID)
                         .get()
-                        .then(function(querySnapshot) {
-                            querySnapshot.forEach(function(doc) {
+                        .then(function (querySnapshot) {
+                            querySnapshot.forEach(function (doc) {
                                 // doc.data() is never undefined for query doc snapshots
                                 console.log(doc.id, " => ", doc.data());
+                                repairingID = doc.data().repairingID;
                                 document.getElementById('setTask').innerHTML = '<div class="font-weight-bold p-1 lead">มอบหมายงาน</div><p class="text-center">' + doc.data().firstName + " " + doc.data().lastName + " (ช่าง" + doc.data().nickname + ')</p>';
-                            });
+                            })
+                                // ช่างกำหนดเวลา
+                                
+                                
+                                .then(function(){
+                                    console.log("console ให้มึงดู");
+                                if (department == "Engineering" && position !== "Supervisor") {
+
+                                    db.collection("repairing").where("repairingID", "==", repairingID)
+                                        .get()
+                                        .then(function (querySnapshot) {
+                                            querySnapshot.forEach(function (doc) {
+                                                console.log(doc.data().dateRP);
+
+                                                //     if (doc.data().dateRP === null) {
+                                                //     document.getElementById('SetTime').innerHTML = '<div class="font-weight-bold p-1 lead bg-info mt-2">ระบุวันที่เข้าซ่อม</div><div class="row"><div class="col-sm-6">' +
+                                                //         "ยังไม่ได้ระบุวันที่" + '</div></div></div>'
+                                                // } else {
+
+                                                //     document.getElementById('SetTime').innerHTML = '<div class="font-weight-bold p-1 lead bg-info mt-2">ระบุวันที่เข้าซ่อม</div><div class="row"><div class="col-sm-6">' +
+                                                //         jsoutput[0].dateRP + '</div></div></div>';
+                                                // }
+                                            });
+
+                                        })
+                                        .catch(function (error) {
+                                            console.log("Error getting documents: ", error);
+                                        });
+                                }
+                            })
                         })
-                        .catch(function(error) {
+                        .catch(function (error) {
                             console.log("Error getting documents: ", error);
                         });
+                    // เช็คการกำหนดเวลา หากช่างยังไม่กำหนดให้ขึ้นdate picker แต่ถ้ามอบหมายงานแล้วให้ขึ้นเวลา
+
                 }
             });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log("Error getting documents: ", error);
         });
 
@@ -213,9 +262,9 @@
         let choosingT = (parseInt(document.getElementById('task').value));
         var docID = localStorage.getItem("docID");
         db.collection("repairing").doc(docID).update({
-                "technicainID": choosingT
-            })
-            .then(function() {
+            "technicainID": choosingT
+        })
+            .then(function () {
                 console.log("Document successfully updated!");
             });
     }
