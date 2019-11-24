@@ -223,6 +223,8 @@
             }
 
         } else {
+            console.log("55555555555555555555555");
+            
             var dep = localStorage.getItem("department");
             db.collection("repairing").where("department", "==", dep).orderBy("repairingID", "desc")
                 .get()
