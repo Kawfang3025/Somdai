@@ -51,15 +51,19 @@ db.collection("technicain").where("email", "==", email)
         console.log("Error getting documents: ", error);
     });
 
-function logout() {
-    firebase.auth().signOut().then(function() {
-        // Sign-out successful.
-        window.location.href = 'index.html';
-        alert('See you again soon').then(function() {
-            localStorage.clear("Email");
+// function logout() {
+   
+//     // Initialize Firebase
+//     firebase.initializeApp(firebaseConfig);
+//     firebase.auth().signOut().then(function() {
+//         // Sign-out successful.
+        
+//         alert('See you again soon').then(function() {
+//             localStorage.clear("Email");
 
-        });
-    }).catch(function(error) {
-        // An error happened.
-    });
-}
+//         });
+//         window.location.href = 'index.html';
+//     }).catch(function(error) {
+//         // An error happened.
+//     });
+// }
