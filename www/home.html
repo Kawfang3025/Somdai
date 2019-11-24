@@ -33,6 +33,28 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        document.addEventListener("deviceready", function() {
+            window.FirebasePlugin.getToken(function(token) {
+                // save this server-side and use it to push notifications to this device
+                console.log(token);
+            }, function(error) {
+                console.error(error);
+            });
+            // Get notified when the user opens a notification
+            window.FirebasePlugin.onMessageReceived(function(message) {
+                console.log("Message type: " + message.messageType);
+                console.log(JSON.stringify(message));
+                cordova.plugins.notification.local.schedule({
+                    title: message.title,
+                    text: message.message,
+                    icon: message.image,
+                    sound: "audio/clearly.mp3",
+                    foreground: true
+                });
+            }, function(error) {
+                console.error(error);
+            });
+        }, false);
     </script>
     <title>SomDai</title>
 </head>
@@ -221,6 +243,8 @@
 
         } else {
             var dep = localStorage.getItem("department");
+            console.log(dep);
+
             db.collection("repairing").where("department", "==", dep).orderBy("repairingID", "desc")
                 .get()
                 .then(function(querySnapshot) {
@@ -344,6 +368,7 @@
         }
     </script>
 
+    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
     <script></script>
