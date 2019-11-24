@@ -279,7 +279,7 @@
         var telNumber;
         var img;
         var id;
-        var data = db.collection("employees").where("employeeID", "==", EmpID);
+        var data = db.collection("employees").where("email", "==", Email);
         var data2 = db.collection("employees");
         console.log(EmpID);
         if (department === "Engineering") {
