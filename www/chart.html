@@ -371,22 +371,28 @@
                 .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
                         year = document.getElementById('yearShow').value;
-                        var DateTimeRP = doc.data().dateRP.toDate();
-                        DateTimeRP = DateTimeRP.toUTCString();
-                        DateTimeRP = DateTimeRP.split(' ').slice(1, 4).join(' ');
-                        var monthRP = doc.data().dateRP.toDate();
-                        monthRP = monthRP.toUTCString();
-                        monthRP = monthRP.split(' ').slice(2, 3).join(' ');
+                        var DateTimeRP;
+                        if (!(doc.data().dateRP)) {
+                            DateTimeRP = "ยังไม่ระบุ";
+                        } else {
+                            DateTimeRP = doc.data().dateRP.toDate();
+                            DateTimeRP = DateTimeRP.toUTCString();
+                            DateTimeRP = DateTimeRP.split(' ').slice(1, 4).join(' ');
+                        }
+
+                        var month = doc.data().date.toDate();
+                        month = month.toUTCString();
+                        month = month.split(' ').slice(2, 3).join(' ');
                         var y = doc.data().date.toDate();
                         y = y.toUTCString();
                         y = y.split(' ').slice(3, 4).join(' ');
                         if (year === y) {
-                            console.log(doc.data());
+                            console.log(doc.data().detail);
                             detail.push(doc.data().detail);
                             dateRP.push(DateTimeRP);
                             empID.push(doc.data().employeeID);
                             techID.push(doc.data().technicainID);
-                            month.push(monthRP);
+                            month.push(month);
                         }
                         db.collection("employees")
                             .get()
@@ -447,10 +453,6 @@
                                             document.getElementById('detail').innerHTML = ""
                                             for (let i = 0; i < month.length; i++) {
                                                 console.log(detail[i]);
-
-                                                if (dateRP[i] === null) {
-                                                    dateRP[i] = 'ยังไม่ระบุ'
-                                                }
                                                 if (month[i] === 'Jan') {
                                                     dateRP[i] = dateRP[i].replace("Jan", "มกราคม");
                                                     if (month[i] !== month[i - 1]) {
@@ -556,12 +558,12 @@
         }
 
         function createPDF() {
-            var chart_div = document.getElementById('chart');
+            var chart_div = document.getElementById('chart_div');
             var chart = new google.visualization.ColumnChart(chart_div);
 
-            //Wait for the chart to finish drawing before calling the getImageURI() method.
+            // Wait for the chart to finish drawing before calling the getImageURI() method.
             google.visualization.events.addListener(chart, 'ready', function () {
-                chart.innerHTML = '<img src="' + chart.getImageURI() + '">';
+                chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
                 console.log(chart_div.innerHTML);
             });
             var sTable = document.getElementById('tab').innerHTML;
@@ -583,7 +585,7 @@
             win.document.write(style);
             win.document.write('</head>');
             win.document.write('<body>');
-            win.document.write('<img src="' + chart.innerHTML + '" alt="Red dot" />');
+            win.document.write('<img src="' + dataURL + '" alt="Red dot" />');
             win.document.write('<br> <br>');
             win.document.write(sTable);
             win.document.write('</body></html>');

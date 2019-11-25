@@ -429,9 +429,9 @@
             var oct = 0
             var nov = 0
             var dec = 0
-            var data = db.collection("repairing");
+            var data = db.collection("repairing").orderBy("repairingID");
             if (department !== 'ทุกแผนก') {
-                data = db.collection("repairing").where("department", "==", department);
+                data = db.collection("repairing").where("department", "==", department).orderBy("repairingID");
             }
             // --------------------------------------------------
             data.get()
