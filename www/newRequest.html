@@ -181,7 +181,7 @@
                 console.log(imgUrl);
                 db.collection("repairing").add({
                         repairingID: rep,
-                        status: "ยังไม่ได้รับมอบหมาย",
+                        status: "กำลังดำเนินงาน",
                         employeeID: (parseInt(localStorage.getItem("myID"))),
                         date: firebase.firestore.Timestamp.fromDate(new Date()),
                         department: localStorage.getItem("department"),

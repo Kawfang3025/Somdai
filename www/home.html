@@ -31,13 +31,25 @@
             appId: "1:524262057903:web:911f71ef1d3b9b29aab15a",
             measurementId: "G-RNKENSBQ91"
         };
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        document.addEventListener("deviceready", function() {
-            window.FirebasePlugin.getToken(function(token) {
-                // save this server-side and use it to push notifications to this device
+        var mydoc = localStorage.getItem("mydoc");
+        var department = localStorage.getItem("department");
+        var db = firebase.firestore();
+        var data = db.collection("employees");
+        if (department === "Engineering") {
+            data = db.collection("technicain");
+        }
 
-                console.log(token);
+        document.addEventListener("deviceready", function() {
+            window.FirebasePlugin.getToken(function(Token) {
+                // save this server-side and use it to push notifications to this device
+                let Ref = data.doc(mydoc);
+                let updateSingle = Ref.update({
+                    token: Token
+                })
+                console.log(Token);
             }, function(error) {
                 console.error(error);
             });
