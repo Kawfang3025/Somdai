@@ -4,15 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Bai+Jamjuree&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -31,17 +35,30 @@
             appId: "1:524262057903:web:911f71ef1d3b9b29aab15a",
             measurementId: "G-RNKENSBQ91"
         };
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        document.addEventListener("deviceready", function() {
-            window.FirebasePlugin.getToken(function(token) {
+        var mydoc = localStorage.getItem("mydoc");
+        var department = localStorage.getItem("department");
+        var db = firebase.firestore();
+        var data = db.collection("employees");
+        if (department === "Engineering") {
+            data = db.collection("technicain");
+        }
+
+        document.addEventListener("deviceready", function () {
+            window.FirebasePlugin.getToken(function (Token) {
                 // save this server-side and use it to push notifications to this device
-                console.log(token);
-            }, function(error) {
+                let Ref = data.doc(mydoc);
+                let updateSingle = Ref.update({
+                    token: Token
+                })
+                console.log(Token);
+            }, function (error) {
                 console.error(error);
             });
             // Get notified when the user opens a notification
-            window.FirebasePlugin.onMessageReceived(function(message) {
+            window.FirebasePlugin.onMessageReceived(function (message) {
                 console.log("Message type: " + message.messageType);
                 console.log(JSON.stringify(message));
                 cordova.plugins.notification.local.schedule({
@@ -51,7 +68,7 @@
                     sound: "audio/clearly.mp3",
                     foreground: true
                 });
-            }, function(error) {
+            }, function (error) {
                 console.error(error);
             });
         }, false);
@@ -66,9 +83,9 @@
             <a id="main" class="m-0" style="color: rgb(255, 255, 255);height: 100%;width: 50%">
                 <span style="cursor:pointer" onclick="openNav()"><label class="hamburger-icon">
                         <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                </label>
+                        <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                    </label>
                 </span>
             </a>
 
@@ -126,7 +143,8 @@
 
                 <!-- มุมมองตาราง -->
                 <div id="table" class="container tab-pane   " style="height: 100%"><br>
-                    <table id="dtBasicExample" class="table table-striped table-hover table-bordered table-sm center" cellspacing="0" width="100%">
+                    <table id="dtBasicExample" class="table table-striped table-hover table-bordered table-sm center"
+                        cellspacing="0" width="100%">
                         <thead class="thead-dark">
                             <tr>
                                 <!-- <th class="th-sm">สถานะ</th> -->
@@ -159,8 +177,8 @@
             if (position == "Supervisor") {
                 console.log("หัวหน้าช่าง");
 
-                db.collection("repairing").orderBy("repairingID", "desc").get().then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                db.collection("repairing").orderBy("repairingID", "desc").get().then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
                         // doc.data() is never undefined for query doc snapshots
                         console.log(doc.id, " => ", doc.data());
                         var docID = doc.id;
@@ -194,7 +212,7 @@
 
                         n++;
                     });
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         $('#dtBasicExample').DataTable();
                         $('.dataTables_length').addClass('bs-select');
                     });
@@ -205,8 +223,8 @@
                 let myID = (parseInt(localStorage.getItem("myID")));
                 db.collection("repairing").where("technicainID", "==", myID).orderBy("repairingID", "desc")
                     .get()
-                    .then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
+                    .then(function (querySnapshot) {
+                        querySnapshot.forEach(function (doc) {
                             // doc.data() is never undefined for query doc snapshots
                             console.log(doc.id, " => ", doc.data());
                             var docID = doc.id;
@@ -239,7 +257,7 @@
 
                             n++;
                         });
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             $('#dtBasicExample').DataTable();
                             $('.dataTables_length').addClass('bs-select');
                         });
@@ -256,8 +274,8 @@
 
             db.collection("repairing").where("department", "==", dep).orderBy("repairingID", "desc")
                 .get()
-                .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
                         // doc.data() is never undefined for query doc snapshots
                         console.log(doc.id, " => ", doc.data());
                         var docID = doc.id;
@@ -292,7 +310,7 @@
 
                         n++;
                     });
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         $('#dtBasicExample').DataTable();
                         $('.dataTables_length').addClass('bs-select');
                     });
@@ -316,8 +334,8 @@
             var db = firebase.firestore();
             db.collection("employees").where("employeeID", "==", ID).limit(1)
                 .get()
-                .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
                         // doc.data() is never undefined for query doc snapshots
                         var name1;
                         console.log(rep);
@@ -331,13 +349,13 @@
                     });
 
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log("Error getting documents: ", error);
                 })
             db.collection("technicain").where("technicainID", "==", ID).limit(1)
                 .get()
-                .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
                         console.log(rep);
 
                         var name3;
@@ -351,7 +369,7 @@
                         document.getElementById(n).src = doc.data().img;
                     });
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log("Error getting documents: ", error);
                 });
         }
@@ -363,14 +381,14 @@
             if (position == "Supervisor") {
                 db.collection("repairing").doc(docID).update({
                     "statusHead": "y"
-                }).then(function() {
+                }).then(function () {
                     console.log("Document successfully updated!");
                     window.location.href = 'detail.html';
                 });
             } else {
                 db.collection("repairing").doc(docID).update({
                     "statusTech": "y"
-                }).then(function() {
+                }).then(function () {
                     console.log("Document successfully updated!");
                     window.location.href = 'detail.html';
                 });

@@ -57,9 +57,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
-        updatestatus();
-
-        function updatestatus() {
+        
             db.collection("repairing").get()
                 .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
@@ -76,7 +74,7 @@
                         console.log(now);
                         console.log(DateTime);
 
-                        if (doc.data().dateRP == Date.now()) {
+                        if (now == DateTime) {
                             let Ref = db.collection("repairing").doc(id);
                             let updateSingle = Ref.update({
                                 status: "ดำเนินการเสร็จสิ้น"
@@ -89,7 +87,7 @@
                     console.log("Error getting documents: ", error);
                 })
 
-        }
+        
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // User is signed in.
