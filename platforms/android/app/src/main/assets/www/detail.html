@@ -128,6 +128,7 @@
     var department = localStorage.getItem("department");
     var position = localStorage.getItem("position");
     var repairingID;
+    var detailRe;
 
     db.collection("employees").where("employeeID", "==", EmpID)
         .get()
@@ -173,6 +174,7 @@
                 // doc.data() is never undefined for query doc snapshots
                 localStorage.setItem("docID", doc.id);
                 document.getElementById("detailshow").innerHTML = doc.data().detail;
+                detailRe = doc.data().detail
                 document.getElementById("photo").src = doc.data().img;
 
                 if (!(doc.data().technicainID)) {
@@ -248,8 +250,42 @@
                 "technicainID": choosingT
             })
             .then(function() {
-                console.log("Document successfully updated!");
-                location.reload();
+                db.collection("technicain").where("technicainID", "==", choosingT)
+                    .get()
+                    .then(function(querySnapshot) {
+                        querySnapshot.forEach(function(doc) {
+                            // doc.data() is never undefined for query doc snapshots
+                            console.log(doc.id, " => ", doc.data());
+                            var to = doc.data().token;
+                            var payload = {
+                                "data": {
+                                    "title": "คุณมีงานเข้ามาใหม่!",
+                                    "message": detailRe,
+                                },
+                                "to": to
+                            }
+                            $.ajax({
+                                type: 'POST',
+                                url: 'https://fcm.googleapis.com/fcm/send',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'key=AIzaSyD3tzVBE8tOPj4mfpejx_W5pE67UkNPDn8'
+                                },
+                                data: JSON.stringify(payload),
+                                success: function(response) {
+                                    console.log("Document successfully updated!");
+                                    location.reload();
+                                },
+                            });
+
+                        });
+
+                    })
+                    .catch(function(error) {
+                        console.log("Error getting documents: ", error);
+                    });
+
+
             });
 
     }
@@ -266,17 +302,44 @@
                 dateRP: timestamp
             })
             .then(function() {
-                console.log("Document successfully written!");
-                location.reload();
-            })
-            .catch(function(error) {
-                console.error("Error writing document: ", error);
-            });
+                    db.collection("employees").where("employeeID", "==", EmpID)
+                        .get()
+                        .then(function(querySnapshot) {
+                            querySnapshot.forEach(function(doc) {
+                                // doc.data() is never undefined for query doc snapshots
+                                console.log(doc.id, " => ", doc.data());
+                                var to = doc.data().token;
+                                var payload = {
+                                    "data": {
+                                        "title": "ช่างระบุวันที่เข้าซ่อมแล้ว!",
+                                        "message": "กดเพื่ออ่านรายละเอียด",
+                                    },
+                                    "to": to
+                                }
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'https://fcm.googleapis.com/fcm/send',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'key=AIzaSyD3tzVBE8tOPj4mfpejx_W5pE67UkNPDn8'
+                                    },
+                                    data: JSON.stringify(payload),
+                                    success: function(response) {
+                                        console.log("Document successfully updated!");
+                                        location.reload();
+                                    },
+                                });
+
+                            });
+                        })
+                        .catch(function(error) {
+                            console.error("Error writing document: ", error);
+                        });
 
 
 
 
-    }
+                }
 </script>
 
 
