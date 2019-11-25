@@ -1,3 +1,36 @@
+updatestatus();
+
+function updatestatus() {
+    db.collection("repairing").get()
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                var id = doc.id;
+
+                var now = new Date();
+                now = now.toUTCString();
+                now = now.split(' ').slice(0, 4).join(' ');
+                console.log(now);
+                
+                var DateTime = doc.data().date.toDate();
+                DateTime = DateTime.toUTCString();
+                DateTime = DateTime.split(' ').slice(0, 4).join(' ');
+                console.log(now);
+                console.log(DateTime);
+
+                if (doc.data().dateRP == Date.now()) {
+                    let Ref = db.collection("repairing").doc(id);
+                    let updateSingle = Ref.update({
+                        status: "ดำเนินการเสร็จสิ้น"
+                    });
+                }
+
+            });
+        })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
+        })
+
+}
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
