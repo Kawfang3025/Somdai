@@ -32,7 +32,7 @@ db.collection("employees").where("email", "==", email)
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-db.collection("technicain").where("email", "==", email)
+db.collection("technician").where("email", "==", email)
     .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
@@ -43,7 +43,7 @@ db.collection("technicain").where("email", "==", email)
             document.getElementById("navpic").src = doc.data().img;
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
-            localStorage.setItem("myID", doc.data().technicainID);
+            localStorage.setItem("myID", doc.data().technicianID);
             localStorage.setItem("mydoc", doc.id);
         });
     })

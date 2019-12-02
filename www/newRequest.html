@@ -194,7 +194,7 @@
                     .then(function(docRef) {
                         console.log("Document written with ID: ", docRef.id);
                         // sendNoti();
-                        db.collection("technicain").where("positions", "==", "Supervisor")
+                        db.collection("technician").where("positions", "==", "Supervisor")
                             .get()
                             .then(function(querySnapshot) {
                                 querySnapshot.forEach(function(doc) {
