@@ -3,9 +3,11 @@
 
 <head>
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Bai+Jamjuree&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -54,9 +56,9 @@
             <a id="main" class="m-0" style="color: rgb(255, 255, 255);height: 100%;">
                 <span style="cursor:pointer" onclick="openNav()"><label class="hamburger-icon">
                         <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                </label>
+                        <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                    </label>
                 </span>
             </a>
 
@@ -149,20 +151,14 @@
         var chartimg;
         yearlist();
         finishdata();
-<<<<<<< HEAD
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-=======
         alldata();
         google.charts.load('current', { 'packages': ['corechart'] });
->>>>>>> f21e313b1176e58eeb271699d43e76e6ca3ee104
         google.charts.setOnLoadCallback(showChart);
         table()
 
         function yearlist() {
-            db.collection("repairing").get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            db.collection("repairing").get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     document.getElementById("yearShow").innerHTML = doc.data().date;
                     var DateTime = doc.data().date.toDate();
                     DateTime = DateTime.toUTCString();
@@ -171,7 +167,7 @@
                     year = [...new Set(year)];
                     // doc.data() is never undefined for query doc snapshots
                     for (let i = 0; i < year.length; i++) {
-                        year.sort(function(a, b) {
+                        year.sort(function (a, b) {
                             return b - a
                         });
                         document.getElementById('yearShow').innerHTML += '<option value="' + year[i] + '">' + year[i] + '</option>`';
@@ -200,8 +196,8 @@
             if (department !== 'ทุกแผนก') {
                 data = db.collection("repairing").where("department", "==", department);
             }
-            data.get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            data.get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     var DateTime = doc.data().date.toDate();
                     DateTime = DateTime.toUTCString();
                     DateTime = DateTime.split(' ').slice(2, 3).join(' ');
@@ -272,8 +268,8 @@
             if (department !== 'ทุกแผนก') {
                 data = db.collection("repairing").where("department", "==", department);
             }
-            data.get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            data.get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     var DateTime = doc.data().date.toDate();
                     DateTime = DateTime.toUTCString();
                     DateTime = DateTime.split(' ').slice(2, 3).join(' ');
@@ -346,18 +342,10 @@
 
             var options = {
                 title: "รายงานการแจ้งซ่อม" + department + " ประจำปี " + year,
-                vAxis: {
-                    title: 'จำนวนการแจ้งซ่อม(ครั้ง)'
-                },
-                hAxis: {
-                    title: 'เดือน'
-                },
+                vAxis: { title: 'จำนวนการแจ้งซ่อม(ครั้ง)' },
+                hAxis: { title: 'เดือน' },
                 seriesType: 'bars',
-                series: {
-                    5: {
-                        type: 'line'
-                    }
-                }
+                series: { 5: { type: 'line' } }
             };
 
             var chart = new google.visualization.ComboChart(document.getElementById('chart'));
@@ -397,13 +385,8 @@
             }
             // --------------------------------------------------
             data.orderBy("repairingID").get()
-<<<<<<< HEAD
-                .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
-=======
                 .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
->>>>>>> f21e313b1176e58eeb271699d43e76e6ca3ee104
                         year = document.getElementById('yearShow').value;
                         var DateTimeRP = doc.data().date.toDate();
                         DateTimeRP = DateTimeRP.toUTCString();
@@ -425,16 +408,16 @@
                         }
                         db.collection("employees")
                             .get()
-                            .then(function(querySnapshot) {
-                                querySnapshot.forEach(function(doc) {
+                            .then(function (querySnapshot) {
+                                querySnapshot.forEach(function (doc) {
                                     for (let i = 0; i < empID.length; i++) {
                                         if (doc.data().employeeID === empID[i]) {
                                             emp.push(doc.data().firstName + ' ' + doc.data().lastName);
                                         } else {
                                             db.collection("technicain")
                                                 .get()
-                                                .then(function(querySnapshot) {
-                                                    querySnapshot.forEach(function(doc) {
+                                                .then(function (querySnapshot) {
+                                                    querySnapshot.forEach(function (doc) {
                                                         if (doc.data().technicainID === empID[i]) {
                                                             emp.push(doc.data().firstName + ' ' + doc.data().lastName);
                                                         }
@@ -444,8 +427,8 @@
                                     }
                                     db.collection("technicain")
                                         .get()
-                                        .then(function(querySnapshot) {
-                                            querySnapshot.forEach(function(doc) {
+                                        .then(function (querySnapshot) {
+                                            querySnapshot.forEach(function (doc) {
                                                 for (let i = 0; i < techID.length; i++) {
                                                     if (doc.data().technicainID === techID[i]) {
                                                         tech.push(doc.data().firstName + ' ' + doc.data().lastName);
@@ -592,15 +575,7 @@
 
         function createPDF() {
 
-<<<<<<< HEAD
-            // Wait for the chart to finish drawing before calling the getImageURI() method.
-            google.visualization.events.addListener(chart, 'ready', function() {
-                chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
-                console.log(chart_div.innerHTML);
-            });
-=======
             console.log(chartimg);
->>>>>>> f21e313b1176e58eeb271699d43e76e6ca3ee104
             var sTable = document.getElementById('tab').innerHTML;
             var year = document.getElementById('yearShow').value;
             var style = "<style>";
@@ -633,9 +608,15 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
 
 </html>
