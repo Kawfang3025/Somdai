@@ -22,7 +22,11 @@ db.collection("employees").where("email", "==", email)
             console.log(doc.id, " => ", doc.data());
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
-            document.getElementById("navpic").src = doc.data().img;
+            if(!(doc.data().img)){
+                document.getElementById("navpic").src = img / profile.png;
+            }else{
+                document.getElementById("navpic").src = doc.data().img;
+            }
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
             localStorage.setItem("myID", doc.data().employeeID);
@@ -40,7 +44,11 @@ db.collection("technician").where("email", "==", email)
             console.log(doc.id, " => ", doc.data());
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
-            document.getElementById("navpic").src = doc.data().img;
+            if(!(doc.data().img)){
+                document.getElementById("navpic").src = img / profile.png;
+            }else{
+                document.getElementById("navpic").src = doc.data().img;
+            }
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
             localStorage.setItem("myID", doc.data().technicianID);

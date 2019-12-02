@@ -173,7 +173,6 @@
                 .then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
                         var id = doc.id;
-
                         var now = new Date();
                         now = now.toUTCString();
                         now = now.split(' ').slice(0, 4).join(' ');

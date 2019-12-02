@@ -3,9 +3,11 @@
 
 <head>
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Bai+Jamjuree&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -21,12 +23,13 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
-        
+
         * {
             box-sizing: border-box;
         }
+
         /* Button used to open the contact form - fixed at the bottom of the page */
-        
+
         .open-button {
             background-color: #555;
             color: white;
@@ -39,8 +42,9 @@
             right: 28px;
             width: 280px;
         }
+
         /* The popup form - hidden by default */
-        
+
         .form-popup {
             display: none;
             position: fixed;
@@ -49,15 +53,17 @@
             border: 3px solid #f1f1f1;
             z-index: 9;
         }
+
         /* Add styles to the form container */
-        
+
         .form-container {
             max-width: 300px;
             padding: 10px;
             background-color: white;
         }
+
         /* Full-width input fields */
-        
+
         .form-container input[type=text],
         .form-container input[type=password] {
             width: 100%;
@@ -66,15 +72,17 @@
             border: none;
             background: #f1f1f1;
         }
+
         /* When the inputs get focus, do something */
-        
+
         .form-container input[type=text]:focus,
         .form-container input[type=password]:focus {
             background-color: #ddd;
             outline: none;
         }
+
         /* Set a style for the submit/login button */
-        
+
         .form-container .btn {
             background-color: #4CAF50;
             color: white;
@@ -85,13 +93,15 @@
             margin-bottom: 10px;
             opacity: 0.8;
         }
+
         /* Add a red background color to the cancel button */
-        
+
         .form-container .cancel {
             background-color: red;
         }
+
         /* Add some hover effects to buttons */
-        
+
         .form-container .btn:hover,
         .open-button:hover {
             opacity: 1;
@@ -132,9 +142,9 @@
             <a id="main" class="m-0" style="color: rgb(255, 255, 255);height: 100%;width: 50%">
                 <span style="cursor:pointer" onclick="openNav()"><label class="hamburger-icon">
                         <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                </label>
+                        <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                    </label>
                 </span>
             </a>
 
@@ -191,7 +201,8 @@
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="" class="form-control input_user" id="email" placeholder="อีเมลล์" disabled>
+                        <input type="text" name="" class="form-control input_user" id="email" placeholder="อีเมลล์"
+                            disabled>
                     </div>
                     <hr style="background-color:aliceblue;">
                     <div>
@@ -251,7 +262,8 @@
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         </div>
-                        <input type="text" name="" class="form-control input_user" id="tel" value="" placeholder="เบอร์โทร">
+                        <input type="text" name="" class="form-control input_user" id="tel" value=""
+                            placeholder="เบอร์โทร">
                     </div>
                     <div class="d-flex justify-content-center mt-3 login_container">
                         <a name="" onclick="confirm()" class="btn login_btn">ยืนยัน</a>
@@ -289,8 +301,8 @@
         }
 
         data.get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     console.log("293: " + doc.data().department);
 
                     firstName = doc.data().firstName
@@ -309,9 +321,13 @@
                 document.getElementById("positions").value = positions;
                 document.getElementById('email').value = email;
                 document.getElementById("tel").value = telNumber;
-                document.getElementById("img").src = img;
+                if (!(img)) {
+                    document.getElementById("img").src = img / profile.png;
+                } else {
+                    document.getElementById("img").src = img;
+                }
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log("Error getting documents: ", error);
             })
 
@@ -329,8 +345,8 @@
             console.log(positions);
 
             data.get()
-                .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
                         id = doc.id;
                         console.log(password);
                         console.log(doc.data().password);
@@ -345,11 +361,11 @@
                                 department: department,
                                 positions: positions,
                                 telNumber: telNumber
-                            }).then(function() {
+                            }).then(function () {
                                 document.getElementById("popup").innerHTML = '<div class="alert alert-success text-center" role="alert"><h1>แก้ไขข้อมูลสำเร็จ!!</h1></div>'
                                 console.log(password);
                                 closeForm();
-                                setTimeout(function() {
+                                setTimeout(function () {
 
                                     window.location.href = 'home.html'
                                 }, 2000);
@@ -361,14 +377,16 @@
 
                     });
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log("Error getting documents: ", error);
                 })
         }
-        var ref = db.collection("employees").doc(mydoc);
+        var ref;
         console.log(EmpID);
         if (department === "Engineer") {
             ref = db.collection("technician").doc(mydoc);
+        }else{
+            ref = db.collection("employees").doc(mydoc);
         }
 
         function getPhoto() {
@@ -395,21 +413,21 @@
             var url;
             console.log(refe);
             console.log(imageData);
-            refe.putString(imageData, 'base64').then(function(snapshot) {
+            refe.putString(imageData, 'base64').then(function (snapshot) {
                 console.log('Uploaded a base64 string!');
-                snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                snapshot.ref.getDownloadURL().then(function (downloadURL) {
                     console.log("File available at", downloadURL);
                     url = downloadURL;
                     //updatePicture(url);
                     ref.update({
                         img: url
-                    }).then(function() {
+                    }).then(function () {
                         console.log("update already");
                         location.reload();
                     });
 
                 })
-            }).then(function() {
+            }).then(function () {
 
             });
         }
@@ -432,9 +450,15 @@
     <script type="text/javascript" src="js/sidebar.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 <script>
     var db = firebase.firestore();
 </script>
