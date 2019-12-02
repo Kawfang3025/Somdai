@@ -134,7 +134,7 @@
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         })
-    db.collection("technicain").where("technicainID", "==", EmpID)
+    db.collection("technician").where("technicianID", "==", EmpID)
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
@@ -160,13 +160,13 @@
                 localStorage.setItem("docID", doc.id);
                 document.getElementById("detailshow").innerHTML = doc.data().detail;
 
-                if (!(doc.data().technicainID)) {
+                if (!(doc.data().technicianID)) {
                     // ถ้ายังไม่มอบหมายงาน
-                    db.collection("technicain").get().then(function(querySnapshot) {
+                    db.collection("technician").get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
 
                             // doc.data() is never undefined for query doc snapshots
-                            document.getElementById('task').innerHTML += "<option value='" + doc.data().technicainID + "'>" + '(ช่าง' + doc.data().nickname + ')' + doc.data().firstName + "</option>"
+                            document.getElementById('task').innerHTML += "<option value='" + doc.data().technicianID + "'>" + '(ช่าง' + doc.data().nickname + ')' + doc.data().firstName + "</option>"
                         });
                     }).catch(function(error) {
                         console.log("Error getting documents: ", error);
@@ -176,8 +176,8 @@
                     // ถ้ามอบหมายงานให้ช่างแล้ว
                     console.log("ถ้ามอบหมายงานให้ช่างแล้ว");
 
-                    let TechID = (parseInt(doc.data().technicainID));
-                    db.collection("technicain").where("technicainID", "==", TechID)
+                    let TechID = (parseInt(doc.data().technicianID));
+                    db.collection("technician").where("technicianID", "==", TechID)
                         .get()
                         .then(function(querySnapshot) {
                             querySnapshot.forEach(function(doc) {
@@ -200,7 +200,7 @@
         let choosingT = (parseInt(document.getElementById('task').value));
         var docID = localStorage.getItem("docID");
         db.collection("repairing").doc(docID).update({
-                "technicainID": choosingT
+                "technicianID": choosingT
             })
             .then(function() {
                 console.log("Document successfully updated!");

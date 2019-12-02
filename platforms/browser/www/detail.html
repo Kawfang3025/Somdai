@@ -148,7 +148,7 @@
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         })
-    db.collection("technicain").where("technicainID", "==", EmpID)
+    db.collection("technician").where("technicianID", "==", EmpID)
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
@@ -177,15 +177,15 @@
                 detailRe = doc.data().detail
                 document.getElementById("photo").src = doc.data().img;
 
-                if (!(doc.data().technicainID)) {
+                if (!(doc.data().technicianID)) {
                     // ถ้ายังไม่มอบหมายงาน
-                    if (department == "Engineering") {
+                    if (department == "Engineer") {
                         document.getElementById("noTask").innerHTML = '<select class="form-control text-center" id="task" style="width: 85%"><option>เลือกช่าง</option></select><button type="button" class="btn btn-success text-center" onclick="confirm()">ยืนยัน</button>';
-                        db.collection("technicain").get().then(function(querySnapshot) {
+                        db.collection("technician").get().then(function(querySnapshot) {
                             querySnapshot.forEach(function(doc) {
 
                                 // doc.data() is never undefined for query doc snapshots
-                                document.getElementById('task').innerHTML += "<option value='" + doc.data().technicainID + "'>" + '(ช่าง' + doc.data().nickname + ')' + doc.data().firstName + "</option>"
+                                document.getElementById('task').innerHTML += "<option value='" + doc.data().technicianID + "'>" + '(ช่าง' + doc.data().nickname + ')' + doc.data().firstName + "</option>"
                             });
                         }).catch(function(error) {
                             console.log("Error getting documents: ", error);
@@ -208,8 +208,8 @@
                         DateRP = DateRP.split(' ').slice(1, 4).join(' ');
                         console.log(DateRP.toString);
                     }
-                    let TechID = (parseInt(doc.data().technicainID));
-                    db.collection("technicain").where("technicainID", "==", TechID)
+                    let TechID = (parseInt(doc.data().technicianID));
+                    db.collection("technician").where("technicianID", "==", TechID)
                         .get()
                         .then(function(querySnapshot) {
                             querySnapshot.forEach(function(doc) {
@@ -218,7 +218,7 @@
                                 repairingID = doc.data().repairingID;
                                 document.getElementById('setTask').innerHTML = '<div class="font-weight-bold p-1 lead">มอบหมายงาน</div><p class="text-center">' + doc.data().firstName + " " + doc.data().lastName + " (ช่าง" + doc.data().nickname + ')</p>';
 
-                                if (department == "Engineering" && position !== "Supervisor") {
+                                if (department == "Engineer" && position !== "Supervisor") {
                                     // console.log("console ให้มึงดู");
                                     if (!DateRP) {
                                         document.getElementById('SetTime').innerHTML = '<div class="font-weight-bold p-1 lead bg-info mt-2">ระบุวันที่เข้าซ่อม</div><div class="row"><div class="col-sm-6"><input id="dateRP" type="date" min="' + p + '"></input> ' +
@@ -248,10 +248,10 @@
         let choosingT = (parseInt(document.getElementById('task').value));
         var docID = localStorage.getItem("docID");
         db.collection("repairing").doc(docID).update({
-                "technicainID": choosingT
+                "technicianID": choosingT
             })
             .then(function() {
-                db.collection("technicain").where("technicainID", "==", choosingT)
+                db.collection("technician").where("technicianID", "==", choosingT)
                     .get()
                     .then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {

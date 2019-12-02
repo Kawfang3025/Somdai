@@ -39,8 +39,8 @@
         var department = localStorage.getItem("department");
         var db = firebase.firestore();
         var data = db.collection("employees");
-        if (department === "Engineering") {
-            data = db.collection("technicain");
+        if (department === "Engineer") {
+            data = db.collection("technician");
         }
 
         document.addEventListener("deviceready", function() {
@@ -200,7 +200,7 @@
 
         
         // เช็ค ตำแหน่งและแผนก
-        if (department == "Engineering") {
+        if (department == "Engineer") {
             if (position == "Supervisor") {
                 console.log("หัวหน้าช่าง");
 
@@ -248,7 +248,7 @@
             } else {
                 console.log("ช่าง");
                 let myID = (parseInt(localStorage.getItem("myID")));
-                db.collection("repairing").where("technicainID", "==", myID).orderBy("repairingID", "desc")
+                db.collection("repairing").where("technicianID", "==", myID).orderBy("repairingID", "desc")
                     .get()
                     .then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
@@ -379,7 +379,7 @@
                 .catch(function(error) {
                     console.log("Error getting documents: ", error);
                 })
-            db.collection("technicain").where("technicainID", "==", ID).limit(1)
+            db.collection("technician").where("technicianID", "==", ID).limit(1)
                 .get()
                 .then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {

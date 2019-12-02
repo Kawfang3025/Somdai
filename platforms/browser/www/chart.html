@@ -101,7 +101,7 @@
                     <option value="Purchased">Purchased</option>
                     <option value="Operation">Operation</option>
                     <option value="Guide">Guide</option>
-                    <option value="Engineering">Engineering</option>
+                    <option value="Engineer">Engineer</option>
                     <option value="Receptions">Receptions</option>
                     <option value="Reservation">Reservation</option>
                     <option value="Food and Beverage">Food and Beverage</option>
@@ -403,7 +403,7 @@
                             detail.push(doc.data().detail);
                             dateRP.push(DateTimeRP);
                             empID.push(doc.data().employeeID);
-                            techID.push(doc.data().technicainID);
+                            techID.push(doc.data().technicianID);
                             month.push(monthRP);
                         }
                         db.collection("employees")
@@ -414,23 +414,23 @@
                                         if (doc.data().employeeID === empID[i]) {
                                             emp.push(doc.data().firstName + ' ' + doc.data().lastName);
                                         } else {
-                                            db.collection("technicain")
+                                            db.collection("technician")
                                                 .get()
                                                 .then(function (querySnapshot) {
                                                     querySnapshot.forEach(function (doc) {
-                                                        if (doc.data().technicainID === empID[i]) {
+                                                        if (doc.data().technicianID === empID[i]) {
                                                             emp.push(doc.data().firstName + ' ' + doc.data().lastName);
                                                         }
                                                     });
                                                 });
                                         }
                                     }
-                                    db.collection("technicain")
+                                    db.collection("technician")
                                         .get()
                                         .then(function (querySnapshot) {
                                             querySnapshot.forEach(function (doc) {
                                                 for (let i = 0; i < techID.length; i++) {
-                                                    if (doc.data().technicainID === techID[i]) {
+                                                    if (doc.data().technicianID === techID[i]) {
                                                         tech.push(doc.data().firstName + ' ' + doc.data().lastName);
                                                     }
                                                 }

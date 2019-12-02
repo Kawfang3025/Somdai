@@ -221,7 +221,7 @@
                             <option value="Purchased">Purchased</option>
                             <option value="Operation">Operation</option>
                             <option value="Guide">Guide</option>
-                            <option value="Engineering">Engineering</option>
+                            <option value="Engineer">Engineer</option>
                             <option value="Receptions">Receptions</option>
                             <option value="Reservation">Reservation</option>
                             <option value="Food and Beverage">Food and Beverage</option>
@@ -244,7 +244,7 @@
                             <option value="Assistant Manager">Assistant Manager</option>
                             <option value="Supervisor">Supervisor</option>
                             <option value="Officer">Officer</option>
-                            <option value="Technicain">Technicain</option>
+                            <option value="Technician">Technician</option>
                         </select>
                     </div>
                     <div class="input-group mb-2">
@@ -283,9 +283,9 @@
         var data = db.collection("employees").where("email", "==", Email);
         var data2 = db.collection("employees");
         console.log(EmpID);
-        if (department === "Engineering") {
-            data = db.collection("technicain").where("email", "==", Email);
-            data2 = db.collection("technicain");
+        if (department === "Engineer") {
+            data = db.collection("technician").where("email", "==", Email);
+            data2 = db.collection("technician");
         }
 
         data.get()
@@ -367,8 +367,8 @@
         }
         var ref = db.collection("employees").doc(mydoc);
         console.log(EmpID);
-        if (department === "Engineering") {
-            ref = db.collection("technicain").doc(mydoc);
+        if (department === "Engineer") {
+            ref = db.collection("technician").doc(mydoc);
         }
 
         function getPhoto() {
@@ -386,8 +386,8 @@
 
             var ref = db.collection("employees").doc(mydoc);
             console.log(EmpID);
-            if (department === "Engineering") {
-                ref = db.collection("technicain").doc(mydoc);
+            if (department === "Engineer") {
+                ref = db.collection("technician").doc(mydoc);
             }
             var imageName = new Date();
             var storageRef = firebase.storage().ref();
