@@ -153,7 +153,7 @@
             if (department == "Engineer") {
                 let newID;
                 // get last ID
-                db.collection("technician").orderBy('techniccianID', 'desc').limit(1)
+                db.collection("technician").orderBy('technicianID', 'desc').limit(1)
                     .get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
                             // doc.data() is never undefined for query doc snapshots

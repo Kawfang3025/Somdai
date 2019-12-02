@@ -23,7 +23,8 @@ db.collection("employees").where("email", "==", email)
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
             if(!(doc.data().img)){
-                document.getElementById("navpic").src = img / profile.png;
+                var url ="https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
+                document.getElementById("navpic").src = url;
             }else{
                 document.getElementById("navpic").src = doc.data().img;
             }
@@ -45,7 +46,8 @@ db.collection("technician").where("email", "==", email)
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
             if(!(doc.data().img)){
-                document.getElementById("navpic").src = img / profile.png;
+                var url ="https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
+                document.getElementById("navpic").src = url;
             }else{
                 document.getElementById("navpic").src = doc.data().img;
             }

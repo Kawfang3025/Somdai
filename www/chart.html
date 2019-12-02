@@ -244,6 +244,7 @@
                 finish.push(oct);
                 finish.push(nov);
                 finish.push(dec);
+                console.log(finish);
                 alldata();
             });
         }
@@ -316,7 +317,8 @@
                 all.push(oct);
                 all.push(nov);
                 all.push(dec);
-                showChart();s
+                console.log(all);
+                showChart();
             });
         }
 
@@ -399,7 +401,6 @@
                         y = y.toUTCString();
                         y = y.split(' ').slice(3, 4).join(' ');
                         if (year === y) {
-                            console.log(doc.data());
                             detail.push(doc.data().detail);
                             dateRP.push(DateTimeRP);
                             empID.push(doc.data().employeeID);
@@ -464,8 +465,6 @@
                                             }
                                             document.getElementById('detail').innerHTML = ""
                                             for (let i = 0; i < month.length; i++) {
-                                                console.log(detail[i]);
-
                                                 if (dateRP[i] === null) {
                                                     dateRP[i] = 'ยังไม่ระบุ'
                                                 }

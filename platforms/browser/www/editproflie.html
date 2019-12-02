@@ -322,7 +322,8 @@
                 document.getElementById('email').value = email;
                 document.getElementById("tel").value = telNumber;
                 if (!(img)) {
-                    document.getElementById("img").src = img / profile.png;
+                    var url ="https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
+                    document.getElementById("img").src = url;
                 } else {
                     document.getElementById("img").src = img;
                 }
