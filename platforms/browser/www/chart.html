@@ -17,6 +17,16 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
     <title>SomDai</title>
+
+    <style>
+        .chart {
+            width: 100%;
+            min-height: 450px;
+        }
+        .tab{
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -72,7 +82,7 @@
             </div>
             <a href="home.html">หน้าหลัก</a>
             <a href="newRequest.html">แจ้งซ่อม</a>
-            <a href="report.html">รายงานการแจ้งซ่อม</a>
+            <a href="chart.html">รายงานการแจ้งซ่อม</a>
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
             <a href="editpassword.html">แก้ไขรหัสผ่าน</a>
             <a href="about.html">ทีมผู้พัฒนา</a>
@@ -106,9 +116,9 @@
                 </center>
 
             </div>
-            <div id="chart" style="width: 900px; height: 500px;"></div>
+            <div id="chart" class="chart" style="height: 360px; width: 100%;"></div>
             <br><br>
-            <div id="tab">
+            <div id="tab" class="tab">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -136,11 +146,17 @@
         var emp = [];
         var tech = [];
         var dateRP = [];
+        var chartimg;
         yearlist();
         finishdata();
+<<<<<<< HEAD
         google.charts.load('current', {
             'packages': ['corechart']
         });
+=======
+        alldata();
+        google.charts.load('current', { 'packages': ['corechart'] });
+>>>>>>> f21e313b1176e58eeb271699d43e76e6ca3ee104
         google.charts.setOnLoadCallback(showChart);
         table()
 
@@ -304,7 +320,7 @@
                 all.push(oct);
                 all.push(nov);
                 all.push(dec);
-                showChart()
+                showChart();s
             });
         }
 
@@ -345,6 +361,11 @@
             };
 
             var chart = new google.visualization.ComboChart(document.getElementById('chart'));
+
+            google.visualization.events.addListener(chart, 'ready', function () {
+                chart.innerHTML = '<img src="' + chart.getImageURI() + '">';
+                chartimg = chart.innerHTML;
+            });
             chart.draw(data, options);
         }
 
@@ -376,8 +397,13 @@
             }
             // --------------------------------------------------
             data.orderBy("repairingID").get()
+<<<<<<< HEAD
                 .then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
+=======
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+>>>>>>> f21e313b1176e58eeb271699d43e76e6ca3ee104
                         year = document.getElementById('yearShow').value;
                         var DateTimeRP = doc.data().date.toDate();
                         DateTimeRP = DateTimeRP.toUTCString();
@@ -565,14 +591,16 @@
         }
 
         function createPDF() {
-            var chart_div = document.getElementById('chart_div');
-            var chart = new google.visualization.ColumnChart(chart_div);
 
+<<<<<<< HEAD
             // Wait for the chart to finish drawing before calling the getImageURI() method.
             google.visualization.events.addListener(chart, 'ready', function() {
                 chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
                 console.log(chart_div.innerHTML);
             });
+=======
+            console.log(chartimg);
+>>>>>>> f21e313b1176e58eeb271699d43e76e6ca3ee104
             var sTable = document.getElementById('tab').innerHTML;
             var year = document.getElementById('yearShow').value;
             var style = "<style>";
@@ -583,7 +611,7 @@
             style = style + "border: 1px solid #ddd;"
             style = style + "border-radius: 4px;"
             style = style + "padding: 5px;"
-            style = style + "width: 100%;"
+            style = style + "width: 98%;"
             style = style + "}"
             style = style + "</style>";
             var win = window.open('', '', 'height=700,width=700');
@@ -592,7 +620,7 @@
             win.document.write(style);
             win.document.write('</head>');
             win.document.write('<body>');
-            win.document.write('<img src="' + dataURL + '" alt="Red dot" />');
+            win.document.write(chartimg);
             win.document.write('<br> <br>');
             win.document.write(sTable);
             win.document.write('</body></html>');
