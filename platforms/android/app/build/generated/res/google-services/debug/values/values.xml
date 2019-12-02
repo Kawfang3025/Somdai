@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">524262057903-t2aljkak1pbjqtik5n9la1ui6cl9nr1t.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://somdai.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">524262057903</string>
+    <string name="google_api_key" translatable="false">AIzaSyB81khd36BmR4cFRFDQ9Zi1n-l4CoWkTvg</string>
+    <string name="google_app_id" translatable="false">1:524262057903:android:a7e254736bc749eeaab15a</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB81khd36BmR4cFRFDQ9Zi1n-l4CoWkTvg</string>
+    <string name="google_storage_bucket" translatable="false">somdai.appspot.com</string>
+    <string name="project_id" translatable="false">somdai</string>
+</resources>
