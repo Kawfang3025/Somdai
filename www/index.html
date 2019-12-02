@@ -57,9 +57,16 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
+<<<<<<< HEAD
         
             
         firebase.auth().onAuthStateChanged(function (user) {
+=======
+
+
+
+        firebase.auth().onAuthStateChanged(function(user) {
+>>>>>>> 97d1c2d8bd4bfbf90ed02d18027ad46ea06e950e
             if (user) {
                 // User is signed in.
                 // Send user to home.html

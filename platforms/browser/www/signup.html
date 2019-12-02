@@ -180,7 +180,15 @@
                                     var errorMessage = error.message;
                                     // ...
                                 });
-                                window.location.href = "index.html"
+                                firebase.auth().signInWithEmailAndPassword(e_mail, password).catch(function(error) {});
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                    if (user) {
+                                        // User is signed in.
+                                        // Send user to home.html
+                                        localStorage.setItem("Email", user.email);
+                                        window.location.href = 'home.html';
+                                    }
+                                });
                             })
                             .catch(function(error) {
                                 console.error("Error adding document: ", error);
@@ -218,7 +226,15 @@
                                     var errorMessage = error.message;
                                     // ...
                                 });
-                                window.location.href = "index.html"
+                                firebase.auth().signInWithEmailAndPassword(e_mail, password).catch(function(error) {});
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                    if (user) {
+                                        // User is signed in.
+                                        // Send user to home.html
+                                        localStorage.setItem("Email", user.email);
+                                        window.location.href = 'home.html';
+                                    }
+                                });
                             })
                             .catch(function(error) {
                                 console.error("Error adding document: ", error);
