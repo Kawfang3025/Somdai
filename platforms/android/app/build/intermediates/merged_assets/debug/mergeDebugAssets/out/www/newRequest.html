@@ -94,7 +94,7 @@
             </div>
             <a href="home.html">หน้าหลัก</a>
             <a href="newRequest.html">แจ้งซ่อม</a>
-            <a href="report.html">รายงานการแจ้งซ่อม</a>
+            <a href="chart.html">รายงานการแจ้งซ่อม</a>
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
             <a href="editpassword.html">แก้ไขรหัสผ่าน</a>
             <a href="about.html">ทีมผู้พัฒนา</a>
@@ -194,7 +194,7 @@
                     .then(function(docRef) {
                         console.log("Document written with ID: ", docRef.id);
                         // sendNoti();
-                        db.collection("technicain").where("positions", "==", "Supervisor")
+                        db.collection("technician").where("positions", "==", "Supervisor")
                             .get()
                             .then(function(querySnapshot) {
                                 querySnapshot.forEach(function(doc) {

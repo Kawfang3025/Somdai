@@ -18,6 +18,7 @@
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+    <script src="https://kit.fontawesome.com/b79eeead1f.js" crossorigin="anonymous"></script>
 
     <script>
         // Your web app's Firebase configuration
@@ -38,8 +39,8 @@
         var department = localStorage.getItem("department");
         var db = firebase.firestore();
         var data = db.collection("employees");
-        if (department === "Engineering") {
-            data = db.collection("technicain");
+        if (department === "Engineer") {
+            data = db.collection("technician");
         }
 
         document.addEventListener("deviceready", function() {
@@ -88,6 +89,7 @@
             <!-- <h4 class="text-light ">SomDai</h4> -->
             <a class="navbar-brand right" href="#">
                 <img src="img/logo.png" alt="logonav" style="width: 60px;">
+                <!-- <span class="badge rounded-circle badge-danger">2</span> -->
             </a>
 
         </nav>
@@ -167,8 +169,37 @@
         var department = localStorage.getItem("department");
         var name2;
         var n = 0;
+        db.collection("repairing").get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        var id = doc.id;
+                        var now = new Date();
+                        now = now.toUTCString();
+                        now = now.split(' ').slice(0, 4).join(' ');
+                        console.log(now);
+
+                        var DateTime = doc.data().dateRP.toDate();
+                        DateTime = DateTime.toUTCString();
+                        DateTime = DateTime.split(' ').slice(0, 4).join(' ');
+                        console.log(now);
+                        console.log(DateTime);
+
+                        if (now == DateTime) {
+                            let Ref = db.collection("repairing").doc(id);
+                            let updateSingle = Ref.update({
+                                status: "ดำเนินการเสร็จสิ้น"
+                            });
+                        }
+
+                    });
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                })
+
+        
         // เช็ค ตำแหน่งและแผนก
-        if (department == "Engineering") {
+        if (department == "Engineer") {
             if (position == "Supervisor") {
                 console.log("หัวหน้าช่าง");
 
@@ -216,7 +247,7 @@
             } else {
                 console.log("ช่าง");
                 let myID = (parseInt(localStorage.getItem("myID")));
-                db.collection("repairing").where("technicainID", "==", myID).orderBy("repairingID", "desc")
+                db.collection("repairing").where("technicianID", "==", myID).orderBy("repairingID", "desc")
                     .get()
                     .then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
@@ -261,8 +292,6 @@
             }
 
         } else {
-            console.log("55555555555555555555555");
-            console.log("พนักงาน");
 
             var dep = localStorage.getItem("department");
             console.log(dep);
@@ -347,7 +376,7 @@
                 .catch(function(error) {
                     console.log("Error getting documents: ", error);
                 })
-            db.collection("technicain").where("technicainID", "==", ID).limit(1)
+            db.collection("technician").where("technicianID", "==", ID).limit(1)
                 .get()
                 .then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {

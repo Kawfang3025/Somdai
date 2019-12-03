@@ -23,14 +23,14 @@ var shell = require('shelljs');
 var events = require('cordova-common').events;
 
 module.exports = {
-    www_dir: function (project_dir) {
+    www_dir: function(project_dir) {
         return path.join(project_dir, 'www');
     },
-    package_name: function (project_dir) {
+    package_name: function(project_dir) {
         // this method should the id from root config.xml => <widget id=xxx
         // return common.package_name(project_dir, this.www_dir(project_dir));
         // console.log('package_name called with ' + project_dir);
-        var pkgName = 'io.cordova.hellocordova';
+        var pkgName = 'com.hanuman.somdai';
         var widget_id_regex = /(?:<widget\s+id=['"])(\S+)(?:['"])/;
 
         var configPath = path.join(project_dir, 'config.xml');
@@ -44,7 +44,7 @@ module.exports = {
         return pkgName;
     },
     'js-module': {
-        install: function (jsModule, plugin_dir, plugin_id, www_dir) {
+        install: function(jsModule, plugin_dir, plugin_id, www_dir) {
             // Copy the plugin's files into the www directory.
             var moduleSource = path.resolve(plugin_dir, jsModule.src);
             // Get module name based on existing 'name' attribute or filename
@@ -62,58 +62,58 @@ module.exports = {
             shell.mkdir('-p', path.dirname(moduleDestination));
             fs.writeFileSync(moduleDestination, scriptContent, 'utf-8');
         },
-        uninstall: function (jsModule, www_dir, plugin_id) {
+        uninstall: function(jsModule, www_dir, plugin_id) {
             var pluginRelativePath = path.join('plugins', plugin_id, jsModule.src);
             // common.removeFileAndParents(www_dir, pluginRelativePath);
             console.log('js-module uninstall called : ' + pluginRelativePath);
         }
     },
     'source-file': {
-        install: function (obj, plugin_dir, project_dir, plugin_id, options) {
+        install: function(obj, plugin_dir, project_dir, plugin_id, options) {
             // var dest = path.join(obj.targetDir, path.basename(obj.src));
             // common.copyFile(plugin_dir, obj.src, project_dir, dest);
             console.log('install called');
         },
-        uninstall: function (obj, project_dir, plugin_id, options) {
+        uninstall: function(obj, project_dir, plugin_id, options) {
             // var dest = path.join(obj.targetDir, path.basename(obj.src));
             // common.removeFile(project_dir, dest);
             console.log('uninstall called');
         }
     },
     'header-file': {
-        install: function (obj, plugin_dir, project_dir, plugin_id, options) {
+        install: function(obj, plugin_dir, project_dir, plugin_id, options) {
             events.emit('verbose', 'header-fileinstall is not supported for browser');
         },
-        uninstall: function (obj, project_dir, plugin_id, options) {
+        uninstall: function(obj, project_dir, plugin_id, options) {
             events.emit('verbose', 'header-file.uninstall is not supported for browser');
         }
     },
     'resource-file': {
-        install: function (obj, plugin_dir, project_dir, plugin_id, options) {
+        install: function(obj, plugin_dir, project_dir, plugin_id, options) {
             events.emit('verbose', 'resource-file.install is not supported for browser');
         },
-        uninstall: function (obj, project_dir, plugin_id, options) {
+        uninstall: function(obj, project_dir, plugin_id, options) {
             events.emit('verbose', 'resource-file.uninstall is not supported for browser');
         }
     },
     'framework': {
-        install: function (obj, plugin_dir, project_dir, plugin_id, options) {
+        install: function(obj, plugin_dir, project_dir, plugin_id, options) {
             events.emit('verbose', 'framework.install is not supported for browser');
         },
-        uninstall: function (obj, project_dir, plugin_id, options) {
+        uninstall: function(obj, project_dir, plugin_id, options) {
             events.emit('verbose', 'framework.uninstall is not supported for browser');
         }
     },
     'lib-file': {
-        install: function (obj, plugin_dir, project_dir, plugin_id, options) {
+        install: function(obj, plugin_dir, project_dir, plugin_id, options) {
             events.emit('verbose', 'lib-file.install is not supported for browser');
         },
-        uninstall: function (obj, project_dir, plugin_id, options) {
+        uninstall: function(obj, project_dir, plugin_id, options) {
             events.emit('verbose', 'lib-file.uninstall is not supported for browser');
         }
     },
     asset: {
-        install: function (asset, plugin_dir, wwwDest) {
+        install: function(asset, plugin_dir, wwwDest) {
             var src = path.join(plugin_dir, asset.src);
             var dest = path.join(wwwDest, asset.target);
             var destDir = path.parse(dest).dir;
@@ -127,7 +127,7 @@ module.exports = {
                 shell.cp('-f', src, dest);
             }
         },
-        uninstall: function (asset, wwwDest, plugin_id) {
+        uninstall: function(asset, wwwDest, plugin_id) {
             shell.rm('-rf', path.join(wwwDest, asset.target));
             shell.rm('-rf', path.join(wwwDest, 'plugins', plugin_id));
         }

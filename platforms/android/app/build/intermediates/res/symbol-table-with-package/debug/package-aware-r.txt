@@ -1,4 +1,4 @@
-io.cordova.hellocordova
+com.hanuman.somdai
 attr alpha
 attr buttonSize
 attr circleCrop

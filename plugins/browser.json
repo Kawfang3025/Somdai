@@ -8,31 +8,31 @@
     },
     "installed_plugins": {
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.hanuman.somdai"
         },
         "cordova-plugin-firebasex": {
             "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
             "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
             "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.hanuman.somdai"
         },
         "cordova-plugin-local-notification": {
             "cordova-plugin-camera": {
-                "PACKAGE_NAME": "io.cordova.hellocordova"
+                "PACKAGE_NAME": "com.hanuman.somdai"
             }
         },
         "dependent_plugins": {
             "cordova-plugin-androidx": {
-                "PACKAGE_NAME": "io.cordova.hellocordova"
+                "PACKAGE_NAME": "com.hanuman.somdai"
             },
             "cordova-plugin-androidx-adapter": {
-                "PACKAGE_NAME": "io.cordova.hellocordova"
+                "PACKAGE_NAME": "com.hanuman.somdai"
             },
             "cordova-plugin-device": {
-                "PACKAGE_NAME": "io.cordova.hellocordova"
+                "PACKAGE_NAME": "com.hanuman.somdai"
             },
             "cordova-plugin-badge": {
-                "PACKAGE_NAME": "io.cordova.hellocordova"
+                "PACKAGE_NAME": "com.hanuman.somdai"
             }
         }
     }

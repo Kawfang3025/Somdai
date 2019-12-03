@@ -3,9 +3,11 @@
 
 <head>
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Bai+Jamjuree&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -17,6 +19,17 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
     <title>SomDai</title>
+
+    <style>
+        .chart {
+            width: 100%;
+            min-height: 450px;
+        }
+
+        .tab {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -44,9 +57,9 @@
             <a id="main" class="m-0" style="color: rgb(255, 255, 255);height: 100%;">
                 <span style="cursor:pointer" onclick="openNav()"><label class="hamburger-icon">
                         <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                <span>&nbsp;</span>
-                </label>
+                        <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                    </label>
                 </span>
             </a>
 
@@ -72,7 +85,7 @@
             </div>
             <a href="home.html">หน้าหลัก</a>
             <a href="newRequest.html">แจ้งซ่อม</a>
-            <a href="report.html">รายงานการแจ้งซ่อม</a>
+            <a href="chart.html">รายงานการแจ้งซ่อม</a>
             <a href="editproflie.html">แก้ไขข้อมูลส่วนตัว</a>
             <a href="editpassword.html">แก้ไขรหัสผ่าน</a>
             <a href="about.html">ทีมผู้พัฒนา</a>
@@ -89,7 +102,7 @@
                     <option value="Purchased">Purchased</option>
                     <option value="Operation">Operation</option>
                     <option value="Guide">Guide</option>
-                    <option value="Engineering">Engineering</option>
+                    <option value="Engineer">Engineer</option>
                     <option value="Receptions">Receptions</option>
                     <option value="Reservation">Reservation</option>
                     <option value="Food and Beverage">Food and Beverage</option>
@@ -106,17 +119,24 @@
                 </center>
 
             </div>
-            <div id="chart" style="width: 900px; height: 500px;"></div>
+            <div id="chart" class="chart" style="height: 360px; width: 100%;"></div>
             <br><br>
-            <div id="tab">
+            <div id="tab" class="tab">
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
-                            <th>เดือน</th>
-                            <th>รายการซ่อม</th>
-                            <th>ผู้แจ้งซ่อม</th>
-                            <th>ช่างที่รับผิดชอบ</th>
-                            <th>วันที่เข้าซ่อม</th>
+                        <tr bgcolor="#005AD0">
+                            <th>
+                                <font color="white">รายการซ่อม</font>
+                            </th>
+                            <th>
+                                <font color="white">ผู้แจ้งซ่อม</font>
+                            </th>
+                            <th>
+                                <font color="white">ช่างที่รับผิดชอบ</font>
+                            </th>
+                            <th>
+                                <font color="white">วันที่แจ้งซ่อม</font>
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="detail">
@@ -136,17 +156,16 @@
         var emp = [];
         var tech = [];
         var dateRP = [];
+        var chartimg;
         yearlist();
         finishdata();
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
+        google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(showChart);
         table()
 
         function yearlist() {
-            db.collection("repairing").get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            db.collection("repairing").get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     document.getElementById("yearShow").innerHTML = doc.data().date;
                     var DateTime = doc.data().date.toDate();
                     DateTime = DateTime.toUTCString();
@@ -155,7 +174,7 @@
                     year = [...new Set(year)];
                     // doc.data() is never undefined for query doc snapshots
                     for (let i = 0; i < year.length; i++) {
-                        year.sort(function(a, b) {
+                        year.sort(function (a, b) {
                             return b - a
                         });
                         document.getElementById('yearShow').innerHTML += '<option value="' + year[i] + '">' + year[i] + '</option>`';
@@ -184,8 +203,8 @@
             if (department !== 'ทุกแผนก') {
                 data = db.collection("repairing").where("department", "==", department);
             }
-            data.get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            data.get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     var DateTime = doc.data().date.toDate();
                     DateTime = DateTime.toUTCString();
                     DateTime = DateTime.split(' ').slice(2, 3).join(' ');
@@ -232,6 +251,7 @@
                 finish.push(oct);
                 finish.push(nov);
                 finish.push(dec);
+                console.log(finish);
                 alldata();
             });
         }
@@ -256,8 +276,8 @@
             if (department !== 'ทุกแผนก') {
                 data = db.collection("repairing").where("department", "==", department);
             }
-            data.get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            data.get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     var DateTime = doc.data().date.toDate();
                     DateTime = DateTime.toUTCString();
                     DateTime = DateTime.split(' ').slice(2, 3).join(' ');
@@ -304,7 +324,8 @@
                 all.push(oct);
                 all.push(nov);
                 all.push(dec);
-                showChart()
+                console.log(all);
+                showChart();
             });
         }
 
@@ -330,21 +351,18 @@
 
             var options = {
                 title: "รายงานการแจ้งซ่อม" + department + " ประจำปี " + year,
-                vAxis: {
-                    title: 'จำนวนการแจ้งซ่อม(ครั้ง)'
-                },
-                hAxis: {
-                    title: 'เดือน'
-                },
+                vAxis: { title: 'จำนวนการแจ้งซ่อม(ครั้ง)' },
+                hAxis: { title: 'เดือน' },
                 seriesType: 'bars',
-                series: {
-                    5: {
-                        type: 'line'
-                    }
-                }
+                series: { 5: { type: 'line' } }
             };
 
             var chart = new google.visualization.ComboChart(document.getElementById('chart'));
+
+            google.visualization.events.addListener(chart, 'ready', function () {
+                chart.innerHTML = '<img src="' + chart.getImageURI() + '">';
+                chartimg = chart.innerHTML;
+            });
             chart.draw(data, options);
         }
 
@@ -358,26 +376,14 @@
             var techID = [];
             tech = [];
             dateRP = [];
-            var jan = 0
-            var feb = 0
-            var mar = 0
-            var apr = 0
-            var may = 0
-            var jun = 0
-            var jul = 0
-            var aug = 0
-            var sep = 0
-            var oct = 0
-            var nov = 0
-            var dec = 0
             var data = db.collection("repairing");
             if (department !== 'ทุกแผนก') {
                 data = db.collection("repairing").where("department", "==", department);
             }
             // --------------------------------------------------
             data.orderBy("repairingID").get()
-                .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
                         year = document.getElementById('yearShow').value;
                         var DateTimeRP = doc.data().date.toDate();
                         DateTimeRP = DateTimeRP.toUTCString();
@@ -390,171 +396,177 @@
                         y = y.toUTCString();
                         y = y.split(' ').slice(3, 4).join(' ');
                         if (year === y) {
-                            console.log(doc.data());
                             detail.push(doc.data().detail);
                             dateRP.push(DateTimeRP);
                             empID.push(doc.data().employeeID);
-                            techID.push(doc.data().technicainID);
+                            console.log(doc.data().technicianID);
+                            
+                            if (!(doc.data().technicianID)) {
+                                techID.push(0);
+                            } else {
+                                techID.push(doc.data().technicianID);
+                            }
                             month.push(monthRP);
                         }
                         db.collection("employees")
                             .get()
-                            .then(function(querySnapshot) {
-                                querySnapshot.forEach(function(doc) {
+                            .then(function (querySnapshot) {
+                                querySnapshot.forEach(function (doc) {
                                     for (let i = 0; i < empID.length; i++) {
                                         if (doc.data().employeeID === empID[i]) {
                                             emp.push(doc.data().firstName + ' ' + doc.data().lastName);
                                         } else {
-                                            db.collection("technicain")
+                                            db.collection("technician")
                                                 .get()
-                                                .then(function(querySnapshot) {
-                                                    querySnapshot.forEach(function(doc) {
-                                                        if (doc.data().technicainID === empID[i]) {
+                                                .then(function (querySnapshot) {
+                                                    querySnapshot.forEach(function (doc) {
+                                                        if (doc.data().technicianID === empID[i]) {
                                                             emp.push(doc.data().firstName + ' ' + doc.data().lastName);
                                                         }
                                                     });
                                                 });
                                         }
                                     }
-                                    db.collection("technicain")
+                                    db.collection("technician")
                                         .get()
-                                        .then(function(querySnapshot) {
-                                            querySnapshot.forEach(function(doc) {
-                                                for (let i = 0; i < techID.length; i++) {
-                                                    if (doc.data().technicainID === techID[i]) {
-                                                        tech.push(doc.data().firstName + ' ' + doc.data().lastName);
+                                        .then(function (querySnapshot) {
+                                            querySnapshot.forEach(function (doc) {
+                                                let id = doc.data().technicianID;
+                                                for (let i = 0; i <= techID.length; i++) {
+                                                    if ((id === parseInt(techID[i]))) {
+                                                        tech[i] = doc.data().firstName + ' ' + doc.data().lastName;
+                                                        // tech.push(doc.data().firstName + ' ' + doc.data().lastName);
+                                                        // console.log(doc.data().firstName + ' ' + doc.data().lastName);
+                                                    } else if (parseInt(techID[i]) === 0) {
+                                                        tech[i] = ("ยังไม่มอบหมายงาน");
                                                     }
                                                 }
                                             });
-                                            for (let i = 0; i < month.length; i++) {
-                                                if (month[i] === 'Jan') {
-                                                    jan++
-                                                } else if (month[i] === 'Feb') {
-                                                    feb++
-                                                } else if (month[i] === 'Mar') {
-                                                    mar++
-                                                } else if (month[i] === 'Apr') {
-                                                    apr++
-                                                } else if (month[i] === 'Mar') {
-                                                    may++;
-                                                } else if (month[i] === 'Jun') {
-                                                    jun++
-                                                } else if (month[i] === 'Jul') {
-                                                    jul++
-                                                } else if (month[i] === 'Aug') {
-                                                    aug++;
-                                                } else if (month[i] === 'Sep') {
-                                                    sep++
-                                                } else if (month[i] === 'Oct') {
-                                                    oct++
-                                                } else if (month[i] === 'Nov') {
-                                                    nov++
-                                                } else if (month[i] === 'Dec') {
-                                                    dec++
-                                                }
-                                            }
+                                            console.log(techID[0]+" "+tech[0]);
+                                            
                                             document.getElementById('detail').innerHTML = ""
                                             for (let i = 0; i < month.length; i++) {
-                                                console.log(detail[i]);
-
-                                                if (dateRP[i] === null) {
-                                                    dateRP[i] = 'ยังไม่ระบุ'
-                                                }
+                                                
                                                 if (month[i] === 'Jan') {
                                                     dateRP[i] = dateRP[i].replace("Jan", "มกราคม");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + jan + '">มกราคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>มกราคม</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Feb') {
                                                     dateRP[i] = dateRP[i].replace("Feb", "กุมภาพันธ์");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + feb + '">กุมภาพันธ์</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>กุมภาพันธ์</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Mar') {
                                                     dateRP[i] = dateRP[i].replace("Mar", "มีนาคม");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + mar + '">มีนาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>มีนาคม</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Apr') {
                                                     dateRP[i] = dateRP[i].replace("Apr", "เมษายน");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + apr + '">เมษายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>เมษายน</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'May') {
                                                     dateRP[i] = dateRP[i].replace("May", "พฤษภาคม");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + may + '">พฤษภาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>พฤษภาคม</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Jun') {
                                                     dateRP[i] = dateRP[i].replace("Jun", "มิถุนายน");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + jun + '">มิถุนายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>มิถุนายน</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Jul') {
                                                     dateRP[i] = dateRP[i].replace("Jul", "กรกฎาคม");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + jul + '">กรกฎาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>กรกฎาคม</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Aug') {
                                                     dateRP[i] = dateRP[i].replace("Aug", "สิงหาคม");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + aug + '">สิงหาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>สิงหาคม</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Sep') {
+                                                    dateRP[i] = dateRP[i].replace("Sep", "กันยายน");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + sep + '">กันยายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>กันยายน</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Oct') {
                                                     dateRP[i] = dateRP[i].replace("Oct", "ตุลาคม");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + oct + '">ตุลาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>ตุลาคม</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Nov') {
                                                     dateRP[i] = dateRP[i].replace("Nov", "พฤศจิกายน");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + nov + '">พฤศจิกายน</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>พฤศจิกายน</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 } else if (month[i] === 'Dec') {
                                                     dateRP[i] = dateRP[i].replace("Dec", "ธันวาคม");
                                                     if (month[i] !== month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<tr><td rowspan="' + dec + '">ธันวาคม</td>' + '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr>';
+                                                        document.getElementById('detail').innerHTML += '<th bgcolor="#00C5EF" colspan="' + 4 + '"><center>ธันวาคม</center></th></tr>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '</tr>';
                                                     } else if (month[i] === month[i - 1]) {
-                                                        document.getElementById('detail').innerHTML += '<td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td>';
+                                                        document.getElementById('detail').innerHTML += '<tr bgcolor="#FFFFFF"><td>' + detail[i] + '</td>' + '<td>' + emp[i] + '</td>' + '<td>' + tech[i] + '</td>' + '<td>' + dateRP[i] + '</td></tr>';
                                                     }
-                                                    document.getElementById('detail').innerHTML += '</tr>';
                                                 }
                                             }
                                         });
@@ -562,17 +574,12 @@
                             });
                     });
                 });
+
         }
 
         function createPDF() {
-            var chart_div = document.getElementById('chart_div');
-            var chart = new google.visualization.ColumnChart(chart_div);
 
-            // Wait for the chart to finish drawing before calling the getImageURI() method.
-            google.visualization.events.addListener(chart, 'ready', function() {
-                chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
-                console.log(chart_div.innerHTML);
-            });
+            console.log(chartimg);
             var sTable = document.getElementById('tab').innerHTML;
             var year = document.getElementById('yearShow').value;
             var style = "<style>";
@@ -583,7 +590,7 @@
             style = style + "border: 1px solid #ddd;"
             style = style + "border-radius: 4px;"
             style = style + "padding: 5px;"
-            style = style + "width: 100%;"
+            style = style + "width: 98%;"
             style = style + "}"
             style = style + "</style>";
             var win = window.open('', '', 'height=700,width=700');
@@ -592,7 +599,7 @@
             win.document.write(style);
             win.document.write('</head>');
             win.document.write('<body>');
-            win.document.write('<img src="' + dataURL + '" alt="Red dot" />');
+            win.document.write(chartimg);
             win.document.write('<br> <br>');
             win.document.write(sTable);
             win.document.write('</body></html>');
@@ -605,9 +612,15 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
 
 </html>

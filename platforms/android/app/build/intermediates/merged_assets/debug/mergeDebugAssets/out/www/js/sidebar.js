@@ -22,7 +22,12 @@ db.collection("employees").where("email", "==", email)
             console.log(doc.id, " => ", doc.data());
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
-            document.getElementById("navpic").src = doc.data().img;
+            if(!(doc.data().img)){
+                var url ="https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
+                document.getElementById("navpic").src = url;
+            }else{
+                document.getElementById("navpic").src = doc.data().img;
+            }
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
             localStorage.setItem("myID", doc.data().employeeID);
@@ -32,7 +37,7 @@ db.collection("employees").where("email", "==", email)
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-db.collection("technicain").where("email", "==", email)
+db.collection("technician").where("email", "==", email)
     .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
@@ -40,10 +45,15 @@ db.collection("technicain").where("email", "==", email)
             console.log(doc.id, " => ", doc.data());
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
-            document.getElementById("navpic").src = doc.data().img;
+            if(!(doc.data().img)){
+                var url ="https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
+                document.getElementById("navpic").src = url;
+            }else{
+                document.getElementById("navpic").src = doc.data().img;
+            }
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
-            localStorage.setItem("myID", doc.data().technicainID);
+            localStorage.setItem("myID", doc.data().technicianID);
             localStorage.setItem("mydoc", doc.id);
         });
     })

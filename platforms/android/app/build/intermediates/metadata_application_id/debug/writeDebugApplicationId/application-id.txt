@@ -1,1 +1,1 @@
-io.cordova.hellocordova
+com.hanuman.somdai
