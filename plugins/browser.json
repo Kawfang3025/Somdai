@@ -1,39 +1,46 @@
 {
-    "prepare_queue": {
-        "installed": [],
-        "uninstalled": []
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
     },
-    "config_munge": {
-        "files": {}
+    "cordova-plugin-firebasex": {
+      "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
+      "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
+      "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
+      "PACKAGE_NAME": "com.hanuman.somdai"
     },
-    "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.hanuman.somdai"
-        },
-        "cordova-plugin-firebasex": {
-            "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
-            "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
-            "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
-            "PACKAGE_NAME": "com.hanuman.somdai"
-        },
-        "cordova-plugin-local-notification": {
-            "cordova-plugin-camera": {
-                "PACKAGE_NAME": "com.hanuman.somdai"
-            }
-        },
-        "dependent_plugins": {
-            "cordova-plugin-androidx": {
-                "PACKAGE_NAME": "com.hanuman.somdai"
-            },
-            "cordova-plugin-androidx-adapter": {
-                "PACKAGE_NAME": "com.hanuman.somdai"
-            },
-            "cordova-plugin-device": {
-                "PACKAGE_NAME": "com.hanuman.somdai"
-            },
-            "cordova-plugin-badge": {
-                "PACKAGE_NAME": "com.hanuman.somdai"
-            }
-        }
+    "cordova-plugin-local-notification": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
     }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-androidx": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
+    },
+    "cordova-plugin-androidx-adapter": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
+    },
+    "cordova-support-android-plugin": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
+    },
+    "cordova-support-google-services": {
+      "PACKAGE_NAME": "com.hanuman.somdai"
+    }
+  }
 }

@@ -18,9 +18,9 @@
         android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- for android -->
     <!-- <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/> -->
     <!-- <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS"/> -->
@@ -67,6 +67,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="org.apache.cordova.camera.FileProvider"
+            android:authorities="com.hanuman.somdai.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/camera_provider_paths" />
+        </provider>
 
         <service
             android:name="com.google.android.gms.measurement.AppMeasurementService"
@@ -118,16 +128,6 @@
             android:exported="false"
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Translucent" />
-
-        <provider
-            android:name="org.apache.cordova.camera.FileProvider"
-            android:authorities="com.hanuman.somdai.provider"
-            android:exported="false"
-            android:grantUriPermissions="true" >
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/camera_provider_paths" />
-        </provider>
 
         <service
             android:name="com.google.android.gms.tagmanager.TagManagerService"

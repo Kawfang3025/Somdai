@@ -58,7 +58,7 @@
     <integer name="status_bar_notification_info_maxnum">999</integer>
     <string name="activity_name">@string/launcher_name</string>
     <string name="app_name">Somdai</string>
-    <string name="com.crashlytics.android.build_id" ns1:ignore="UnusedResources,TypographyDashes" translatable="false">f0ad22f1-08f5-4728-9a20-fd40e4e3a4e3</string>
+    <string name="com.crashlytics.android.build_id" ns1:ignore="UnusedResources,TypographyDashes" translatable="false">e1c32be4-7830-4d0f-92bf-ef95909bb76b</string>
     <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable</string>
     <string msgid="227660514972886228" name="common_google_play_services_enable_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t work unless you enable Google Play services.</string>
     <string msgid="5122002158466380389" name="common_google_play_services_enable_title">Enable Google Play services</string>
@@ -84,7 +84,7 @@
     <string name="firebase_database_url" translatable="false">https://somdai.firebaseio.com</string>
     <string name="gcm_defaultSenderId" translatable="false">524262057903</string>
     <string name="google_api_key" translatable="false">AIzaSyB81khd36BmR4cFRFDQ9Zi1n-l4CoWkTvg</string>
-    <string name="google_app_id" translatable="false">1:524262057903:android:a7e254736bc749eeaab15a</string>
+    <string name="google_app_id" translatable="false">1:524262057903:android:2a91f8ccbe06b199aab15a</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB81khd36BmR4cFRFDQ9Zi1n-l4CoWkTvg</string>
     <string name="google_storage_bucket" translatable="false">somdai.appspot.com</string>
     <string name="launcher_name">@string/app_name</string>

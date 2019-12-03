@@ -39,7 +39,7 @@ var PluginInfoProvider = cdvcmn.PluginInfoProvider;
 var BrowserParser = require('./browser_parser');
 var PLATFORM_NAME = 'browser';
 
-function setupEvents(externalEventEmitter) {
+function setupEvents (externalEventEmitter) {
     if (externalEventEmitter) {
         // This will make the platform internal events visible outside
         selfEvents.forwardEventsTo(externalEventEmitter);
@@ -52,7 +52,7 @@ function setupEvents(externalEventEmitter) {
     return selfEvents;
 }
 
-function Api(platform, platformRootDir, events) {
+function Api (platform, platformRootDir, events) {
 
     this.platform = platform || PLATFORM_NAME;
 
@@ -81,13 +81,13 @@ function Api(platform, platformRootDir, events) {
     this._munger = new PlatformMunger(platform, this.root, this._platformJson, this._pluginInfoProvider);
 }
 
-Api.createPlatform = function(dest, config, options, events) {
+Api.createPlatform = function (dest, config, options, events) {
 
     var creator = require('../../lib/create');
     events = setupEvents(events);
 
     var name = 'HelloCordova';
-    var id = 'com.hanuman.somdai';
+    var id = 'io.cordova.hellocordova';
     if (config) {
         name = config.name();
         id = config.packageName();
@@ -97,7 +97,7 @@ Api.createPlatform = function(dest, config, options, events) {
     try {
         // we create the project using our scripts in this platform
         result = creator.createProject(dest, id, name, options)
-            .then(function() {
+            .then(function () {
                 // after platform is created we return Api instance based on new Api.js location
                 // Api.js has been copied to the new project
                 // This is required to correctly resolve paths in the future api calls
@@ -111,13 +111,13 @@ Api.createPlatform = function(dest, config, options, events) {
     return result;
 };
 
-Api.updatePlatform = function(dest, options, events) {
+Api.updatePlatform = function (dest, options, events) {
     // console.log("test-platform:Api:updatePlatform");
     // todo?: create projectInstance and fulfill promise with it.
     return Promise.resolve();
 };
 
-Api.prototype.getPlatformInfo = function() {
+Api.prototype.getPlatformInfo = function () {
     // console.log("browser-platform:Api:getPlatformInfo");
     // return PlatformInfo object
     return {
@@ -129,7 +129,7 @@ Api.prototype.getPlatformInfo = function() {
     };
 };
 
-Api.prototype.prepare = function(cordovaProject, options) {
+Api.prototype.prepare = function (cordovaProject, options) {
 
     // First cleanup current config and merge project's one into own
     var defaultConfigPath = path.join(this.locations.platformRootDir, 'cordova',
@@ -194,7 +194,7 @@ Api.prototype.prepare = function(cordovaProject, options) {
             }
             // icons
             var icons = this.config.getStaticResources('browser', 'icon');
-            var manifestIcons = icons.map(function(icon) {
+            var manifestIcons = icons.map(function (icon) {
                 // given a tag like this :
                 // <icon src="res/ios/icon.png" width="57" height="57" density="mdpi" />
                 /* configParser returns icons that look like this :
@@ -211,11 +211,9 @@ Api.prototype.prepare = function(cordovaProject, options) {
                     "sizes": "128x128"
                 } ******/
                 // ?Is it worth looking at file extentions?
-                return {
-                    'src': icon.src,
+                return { 'src': icon.src,
                     'type': 'image/png',
-                    'sizes': (icon.width + 'x' + icon.height)
-                };
+                    'sizes': (icon.width + 'x' + icon.height) };
             });
             manifestJson.icons = manifestIcons;
 
@@ -261,7 +259,7 @@ Api.prototype.prepare = function(cordovaProject, options) {
     return this.parser.update_project(this.config, options);
 };
 
-Api.prototype.addPlugin = function(pluginInfo, installOptions) {
+Api.prototype.addPlugin = function (pluginInfo, installOptions) {
 
     // console.log(new Error().stack);
     if (!pluginInfo) {
@@ -283,15 +281,17 @@ Api.prototype.addPlugin = function(pluginInfo, installOptions) {
     pluginInfo.getFilesAndFrameworks(this.platform)
         .concat(pluginInfo.getAssets(this.platform))
         .concat(pluginInfo.getJsModules(this.platform))
-        .forEach(function(item) {
+        .forEach(function (item) {
             actions.push(actions.createAction(
-                self._getInstaller(item.itemType), [item, pluginInfo.dir, pluginInfo.id, installOptions, projectFile],
-                self._getUninstaller(item.itemType), [item, pluginInfo.dir, pluginInfo.id, installOptions, projectFile]));
+                self._getInstaller(item.itemType),
+                [item, pluginInfo.dir, pluginInfo.id, installOptions, projectFile],
+                self._getUninstaller(item.itemType),
+                [item, pluginInfo.dir, pluginInfo.id, installOptions, projectFile]));
         });
 
     // run through the action stack
     return actions.process(this.platform, this.root)
-        .then(function() {
+        .then(function () {
             if (projectFile) {
                 projectFile.write();
             }
@@ -304,7 +304,7 @@ Api.prototype.addPlugin = function(pluginInfo, installOptions) {
             self._munger
                 // Ignore passed `is_top_level` option since platform itself doesn't know
                 // anything about managing dependencies - it's responsibility of caller.
-                .add_plugin_changes(pluginInfo, installOptions.variables, /* is_top_level= */ true, /* should_increment= */ true)
+                .add_plugin_changes(pluginInfo, installOptions.variables, /* is_top_level= */true, /* should_increment= */true)
                 .save_all();
 
             var targetDir = installOptions.usePlatformWww ?
@@ -315,7 +315,7 @@ Api.prototype.addPlugin = function(pluginInfo, installOptions) {
         });
 };
 
-Api.prototype.removePlugin = function(plugin, uninstallOptions) {
+Api.prototype.removePlugin = function (plugin, uninstallOptions) {
     // console.log("NotImplemented :: browser-platform:Api:removePlugin ",plugin, uninstallOptions);
 
     uninstallOptions = uninstallOptions || {};
@@ -331,7 +331,7 @@ Api.prototype.removePlugin = function(plugin, uninstallOptions) {
     plugin.getFilesAndFrameworks(this.platform)
         .concat(plugin.getAssets(this.platform))
         .concat(plugin.getJsModules(this.platform))
-        .forEach(function(item) {
+        .forEach(function (item) {
             actions.push(actions.createAction(
                 self._getUninstaller(item.itemType), [item, plugin.dir, plugin.id, uninstallOptions, projectFile],
                 self._getInstaller(item.itemType), [item, plugin.dir, plugin.id, uninstallOptions, projectFile]));
@@ -339,7 +339,7 @@ Api.prototype.removePlugin = function(plugin, uninstallOptions) {
 
     // run through the action stack
     return actions.process(this.platform, this.root)
-        .then(function() {
+        .then(function () {
             if (projectFile) {
                 projectFile.write();
             }
@@ -347,7 +347,7 @@ Api.prototype.removePlugin = function(plugin, uninstallOptions) {
             self._munger
                 // Ignore passed `is_top_level` option since platform itself doesn't know
                 // anything about managing dependencies - it's responsibility of caller.
-                .remove_plugin_changes(plugin, /* is_top_level= */ true)
+                .remove_plugin_changes(plugin, /* is_top_level= */true)
                 .save_all();
 
             var targetDir = uninstallOptions.usePlatformWww ?
@@ -361,9 +361,9 @@ Api.prototype.removePlugin = function(plugin, uninstallOptions) {
         });
 };
 
-Api.prototype._getInstaller = function(type) {
+Api.prototype._getInstaller = function (type) {
     var self = this;
-    return function(item, plugin_dir, plugin_id, options, project) {
+    return function (item, plugin_dir, plugin_id, options, project) {
         var installer = self._handler[type];
 
         if (!installer) {
@@ -385,9 +385,9 @@ Api.prototype._getInstaller = function(type) {
     };
 };
 
-Api.prototype._getUninstaller = function(type) {
+Api.prototype._getUninstaller = function (type) {
     var self = this;
-    return function(item, plugin_dir, plugin_id, options, project) {
+    return function (item, plugin_dir, plugin_id, options, project) {
         var installer = self._handler[type];
 
         if (!installer) {
@@ -417,29 +417,28 @@ Api.prototype._getUninstaller = function(type) {
  * @param   {String}  targetDir  The directory, where updated cordova_plugins.js
  *   should be written to.
  */
-Api.prototype._addModulesInfo = function(plugin, targetDir) {
+Api.prototype._addModulesInfo = function (plugin, targetDir) {
     var installedModules = this._platformJson.root.modules || [];
 
-    var installedPaths = installedModules.map(function(installedModule) {
+    var installedPaths = installedModules.map(function (installedModule) {
         return installedModule.file;
     });
 
     var modulesToInstall = plugin.getJsModules(this.platform)
-        .filter(function(moduleToInstall) {
+        .filter(function (moduleToInstall) {
             return installedPaths.indexOf(moduleToInstall.file) === -1;
-        }).map(function(moduleToInstall) {
+        }).map(function (moduleToInstall) {
             var moduleName = plugin.id + '.' + (moduleToInstall.name || moduleToInstall.src.match(/([^\/]+)\.js/)[1]);
             var obj = {
-                file: ['plugins', plugin.id, moduleToInstall.src].join('/'),
-                /* eslint no-useless-escape : 0 */
+                file: ['plugins', plugin.id, moduleToInstall.src].join('/'), /* eslint no-useless-escape : 0 */
                 id: moduleName,
                 pluginId: plugin.id
             };
             if (moduleToInstall.clobbers.length > 0) {
-                obj.clobbers = moduleToInstall.clobbers.map(function(o) { return o.target; });
+                obj.clobbers = moduleToInstall.clobbers.map(function (o) { return o.target; });
             }
             if (moduleToInstall.merges.length > 0) {
-                obj.merges = moduleToInstall.merges.map(function(o) { return o.target; });
+                obj.merges = moduleToInstall.merges.map(function (o) { return o.target; });
             }
             if (moduleToInstall.runs) {
                 obj.runs = true;
@@ -465,7 +464,7 @@ Api.prototype._addModulesInfo = function(plugin, targetDir) {
  *   Ususally it is either <platform>/www or <platform>/platform_www
  *   directories.
  */
-Api.prototype._writePluginModules = function(targetDir) {
+Api.prototype._writePluginModules = function (targetDir) {
     // Write out moduleObjects as JSON wrapped in a cordova module to cordova_plugins.js
     var final_contents = 'cordova.define(\'cordova/plugin_list\', function(require, exports, module) {\n';
     final_contents += 'module.exports = ' + JSON.stringify(this._platformJson.root.modules, null, '    ') + ';\n';
@@ -488,15 +487,15 @@ Api.prototype._writePluginModules = function(targetDir) {
  * @param   {String}  targetDir  The directory, where updated cordova_plugins.js
  *   should be written to.
  */
-Api.prototype._removeModulesInfo = function(plugin, targetDir) {
+Api.prototype._removeModulesInfo = function (plugin, targetDir) {
     var installedModules = this._platformJson.root.modules || [];
     var modulesToRemove = plugin.getJsModules(this.platform)
-        .map(function(jsModule) {
+        .map(function (jsModule) {
             return ['plugins', plugin.id, jsModule.src].join('/');
         });
 
     var updatedModules = installedModules
-        .filter(function(installedModule) {
+        .filter(function (installedModule) {
             return (modulesToRemove.indexOf(installedModule.file) === -1);
         });
 
@@ -509,23 +508,23 @@ Api.prototype._removeModulesInfo = function(plugin, targetDir) {
     this._platformJson.save();
 };
 
-Api.prototype.build = function(buildOptions) {
+Api.prototype.build = function (buildOptions) {
     var self = this;
     return require('./lib/check_reqs').run()
-        .then(function() {
+        .then(function () {
             return require('./lib/build').run.call(self, buildOptions);
         });
 };
 
-Api.prototype.run = function(runOptions) {
+Api.prototype.run = function (runOptions) {
     return require('./lib/run').run(runOptions);
 };
 
-Api.prototype.clean = function(cleanOptions) {
+Api.prototype.clean = function (cleanOptions) {
     return require('./lib/clean').run(cleanOptions);
 };
 
-Api.prototype.requirements = function() {
+Api.prototype.requirements = function () {
     return require('./lib/check_reqs').run();
 };
 

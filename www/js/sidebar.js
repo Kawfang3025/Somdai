@@ -22,10 +22,10 @@ db.collection("employees").where("email", "==", email)
             console.log(doc.id, " => ", doc.data());
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
-            if(!(doc.data().img)){
-                var url ="https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
+            if (!(doc.data().img)) {
+                var url = "https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
                 document.getElementById("navpic").src = url;
-            }else{
+            } else {
                 document.getElementById("navpic").src = doc.data().img;
             }
             localStorage.setItem("position", doc.data().positions);
@@ -45,11 +45,12 @@ db.collection("technician").where("email", "==", email)
             console.log(doc.id, " => ", doc.data());
             document.getElementById("fname").innerHTML = doc.data().firstName + " " + doc.data().lastName;
             document.getElementById("position").innerHTML = doc.data().positions;
-            if(!(doc.data().img)){
-                var url ="https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
-                document.getElementById("navpic").src = url;
-            }else{
+            if (doc.data().img) {
                 document.getElementById("navpic").src = doc.data().img;
+            } else {
+                var url = "https://firebasestorage.googleapis.com/v0/b/somdai.appspot.com/o/images%2Fprofile.png?alt=media&token=dcc8e3ce-1eb4-401f-90a5-e23d1311d719";
+                document.getElementById("navpic").src = url;
+
             }
             localStorage.setItem("position", doc.data().positions);
             localStorage.setItem("department", doc.data().department);
@@ -62,12 +63,12 @@ db.collection("technician").where("email", "==", email)
     });
 
 // function logout() {
-   
+
 //     // Initialize Firebase
 //     firebase.initializeApp(firebaseConfig);
 //     firebase.auth().signOut().then(function() {
 //         // Sign-out successful.
-        
+
 //         alert('See you again soon').then(function() {
 //             localStorage.clear("Email");
 
